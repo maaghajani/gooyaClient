@@ -1,0 +1,75 @@
+<div class="intersect" id="intersect" [@openClose]="this.publicVar.isOpenIntersect ? 'open' : 'close'">
+  <div class="section-intersect">
+    <div class="iconInter">
+      <div appTooltips="منو" placement="bottom" delay="500">
+        <div class="menu" (click)="this.menu.openNavigation()">
+          <svg viewBox="0 0 139 139">
+            <style>
+              .st00 {
+                fill: none;
+                stroke: #fff;
+                stroke-width: 9;
+                stroke-miterlimit: 9;
+              }
+            </style>
+            <path d="M26.5 46.3h86M26.5 92.7h86M26.5 69.5h86" class="st00" />
+          </svg>
+        </div>
+      </div>
+      <div appTooltips="بستن" placement="bottom" delay="500">
+        <div id="intersect-closer" class="intersect-closer" (click)="closeIntersection()">
+          <svg height="512px" viewBox="0 0 512 512" width="512px">
+            <path
+              d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="intersect-base">
+      <div>
+        <div class="point">
+          <svg width="15px" height="15px" viewBox="0 0 140 236.1">
+            <path d="M296,178.5H202V83.4H156V319.5h46v-95h94Z" transform="translate(-156 -83.4)" style="fill:#ffffff" />
+          </svg>
+        </div>
+        <div class="more">
+          <svg width="14px" height="14px" fill="#fff" viewBox="0 0 408 408">
+            <path
+              d="M204 102c28.05 0 51-22.95 51-51S232.05 0 204 0s-51 22.95-51 51 22.95 51 51 51zm0 51c-28.05 0-51 22.95-51 51s22.95 51 51 51 51-22.95 51-51-22.95-51-51-51zm0 153c-28.05 0-51 22.95-51 51s22.95 51 51 51 51-22.95 51-51-22.95-51-51-51z"
+            />
+          </svg>
+        </div>
+        <div class="location">
+          <svg width="15px" height="15px" viewBox="0 0 140 236.1">
+            <path d="M296,178.5H202V83.4H156V319.5h46v-95h94Z" transform="translate(-156 -83.4)" style="fill:#ffffff" />
+          </svg>
+        </div>
+      </div>
+      <div class="intersect-searchbox ">
+        <input
+          class="input-srart"
+          id="intersect1"
+          type="text"
+          placeholder="نام خیابان اول را وارد کنید..."
+          (keyup.enter)="nextInput()"
+        />
+        <span class="input-underline"></span>
+        <br />
+        <div>
+          <input
+            class="input-srart tooltip"
+            id="intersect2"
+            type="text"
+            placeholder="نام خیابان دوم را وارد کنید..."
+            (keyup.enter)="searchIntersect()"
+          />
+        </div>
+        <span class="input-underline"></span>
+      </div>
+    </div>
+    <div>
+      <button class="go" (click)="searchIntersect()">جستجو</button>
+    </div>
+  </div>
+</div>

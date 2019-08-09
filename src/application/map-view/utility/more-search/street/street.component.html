@@ -1,0 +1,62 @@
+<div
+  class="street"
+  id="street"
+  [@openClose]="this.publicVar.isOpenStreet ? 'open' : 'close'"
+>
+  <div class="section-street">
+    <div class="iconStreet">
+      <div appTooltips="منو" placement="bottom" delay="500">
+        <div class="menu" (click)="this.menu.openNavigation()">
+          <svg viewBox="0 0 139 139">
+            <style>
+              .st00 {
+                fill: none;
+                stroke: #fff;
+                stroke-width: 9;
+                stroke-miterlimit: 9;
+              }
+            </style>
+            <path d="M26.5 46.3h86M26.5 92.7h86M26.5 69.5h86" class="st00" />
+          </svg>
+        </div>
+      </div>
+      <div appTooltips="بستن" placement="bottom" delay="500">
+        <div id="street-closer" class="street-closer" (click)="closeStreet()">
+          <svg height="512px" viewBox="0 0 512 512" width="512px">
+            <path
+              d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="street-base">
+      <div>
+        <div class="point">
+          <svg
+            class="icon"
+            width="20px"
+            heigth="20px"
+            fill="#ffffff"
+            viewBox="0 0 1152 1024"
+          >
+            <path
+              d="M820.944895 447.058953C897.635839 134.385049 452.546929 0 452.546929 0l-95.406349 0c0 0 325.197746 111.448124 214.312491 394.149237C461.834272 673.332417 0 1024 0 1024l404.703037 0C404.703037 1024 743.550364 762.969356 820.944895 447.058953L820.944895 447.058953zM600.300124 0l-95.406349 0c0 0 436.364436 133.822179 362.628556 472.669507-68.951491 316.895424-348.69754 551.330493-348.69754 551.330493l417.789749 0c0 0 215.297513-185.043287 215.297513-525.71994C1151.912052 157.462691 600.300124 0 600.300124 0L600.300124 0z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="street-searchbox ">
+        <input
+          class="input-srart"
+          id="street-input"
+          type="text"
+          placeholder="نام خیابان را وارد کنید..."
+        />
+        <span class="input-underline"></span>
+      </div>
+    </div>
+    <div>
+      <button class="go">جستجو</button>
+    </div>
+  </div>
+</div>

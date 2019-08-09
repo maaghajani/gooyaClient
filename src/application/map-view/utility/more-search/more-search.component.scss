@@ -1,0 +1,118 @@
+@import '../../../../scss/utility/utility.scss';
+
+.more-search {
+  margin-top: 1px;
+  @extend %radius-more;
+  @extend %Shadow-more;
+  height: 38px;
+  background-color: $color-theme-secondary;
+  border: 1px solid $color-light-gray;
+  transition: all 0.5s linear;
+  display: block;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 320px;
+  padding-bottom: 3px;
+  cursor: pointer;
+  .link-more {
+    display: flex;
+    margin-top: 8px;
+    button {
+      border: none;
+      background-color: transparent;
+      @include square(12px);
+      margin-right: 12px;
+      opacity: 0.72;
+      cursor: pointer;
+      svg {
+        margin-right: 5px;
+        align-items: center;
+        @include square(12px);
+        display: inline-block;
+        opacity: 0.9;
+        margin-top: 5px;
+      }
+    }
+    .more-txt {
+      border: none;
+      opacity: 0.5;
+      color: inherit;
+      font-size: 0.95em;
+      box-sizing: border-box;
+      margin-right: 27px;
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+  //alternatives for search
+  .ul-more {
+    align-items: center;
+    box-sizing: border-box;
+    min-width: 320px;
+    -webkit-transition: opacity .4s ease-in-out;
+    -moz-transition: opacity .4s ease-in-out;
+    -ms-transition: opacity .4s ease-in-out;
+    -o-transition: opacity .4s ease-in-out;
+     opacity: 0;
+    ul {
+      margin-top: 11px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      cursor: pointer;
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      span {
+        font-size: 0.9em;
+        margin-top: 8px;
+      }
+      img {
+        opacity: 0.9;
+      }
+    }
+  }
+  //alternatives for search
+  .link-close {
+    // display: flex;
+    // transition: visibility 0s 2s, opacity 2s linear;
+    display: none;
+    padding-top: 6px;
+    cursor: pointer;
+    box-shadow: inset 0px 2px 4px -4px #777;
+    margin-top: 14px;
+    align-items: flex-end;
+    button {
+      border: none;
+      background-color: transparent;
+      @include square(18px);
+      margin-right: 10px;
+      opacity: 0.72;
+      cursor: pointer;
+      svg {
+        margin-right: 5px;
+        align-items: center;
+        @include square(12px);
+        display: inline-block;
+        opacity: 0.9;
+        margin-top: 5px;
+      }
+    }
+    .more-txt {
+      border: none;
+      opacity: 0.5;
+      color: inherit;
+      font-size: 0.95em;
+      box-sizing: border-box;
+      margin-right: 23px;
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
+

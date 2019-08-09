@@ -1,0 +1,46 @@
+@import "../../../../scss/utility/utility.scss";
+.search-box {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 12px;
+  .search-txt {
+    width: 272px;
+    height: 24px;
+    border: none;
+    font-size: 1.1em;
+    box-sizing: border-box;
+    &:focus {
+      outline: 0;
+    }
+    &::placeholder {
+      color: $color-search-text;
+      opacity: 1; /* Firefox */
+    }
+
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: $color-search-text;
+    }
+
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: $color-search-text;
+    }
+  }
+  .search-icon {
+    button {
+      border: none;
+      background-color: transparent;
+      margin-top: 4px;
+      opacity: 0.42;
+      // margin-left: 7px;
+      // background-repeat: no-repeat;
+      // background-image: url(../../../../img/search.png);
+      // background-size: 84px 27px;
+      // background-position: 1px -2px;
+      // height: 28px;
+      // width: 28px;
+      // align-items: center;
+    }
+  }
+}

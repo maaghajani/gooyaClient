@@ -1,0 +1,13 @@
+@import '../../../../scss/utility/utility.scss';
+.send-feedback{
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+
+    span {
+        line-height: 1.5;
+        color: lighten($color: $color-dark, $amount: 30);
+        font-size: 0.79em;
+        letter-spacing: 0.5px;
+      }
+}

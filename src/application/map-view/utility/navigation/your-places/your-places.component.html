@@ -1,0 +1,80 @@
+<div class="places" id="places" [@openClose]="this.publicVar.isOpenPlaces ? 'open' : 'close'">
+  <div class="section-places">
+    <div class="iconPlaces">
+      <div appTooltips="منو" placement="bottom" delay="500">
+        <div class="menu" (click)="this.menu.openNavigation()">
+          <svg viewBox="0 0 139 139">
+            <style>
+              .st00 {
+                fill: none;
+                stroke: #fff;
+                stroke-width: 9;
+                stroke-miterlimit: 9;
+              }
+            </style>
+            <path d="M26.5 46.3h86M26.5 92.7h86M26.5 69.5h86" class="st00" />
+          </svg>
+        </div>
+      </div>
+      <div appTooltips="بستن" placement="bottom" delay="500">
+        <div id="places-closer" class="places-closer" (click)="closePlaces()">
+          <svg height="512px" viewBox="0 0 512 512" width="512px">
+            <path
+              d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <ul class="place-items" id="place-items">
+      <li class="place-item" id="place-item-home">
+        <div id="place-item-home-title" (click)="closeWork(); FavoritHomeComponent.openHome()">
+          <svg viewBox="0 0 49.5 39.4">
+            <g data-name="g3015">
+              <path
+                d="M42.4 22.7v14.7a1.9 1.9 0 0 1-.6 1.4 1.9 1.9 0 0 1-1.4.6H28.7V27.6h-7.9v11.8H9a1.9 1.9 0 0 1-1.4-.6 1.9 1.9 0 0 1-.5-1.4V22.7a.5.5 0 0 1 0-.1.3.3 0 0 0 0-.1L24.7 7.9l17.7 14.6a.4.4 0 0 1 0 .2zm6.8-2.1l-1.9 2.2a1 1 0 0 1-.6.4h-.1a1 1 0 0 1-.6-.2L24.7 5.3 3.5 22.9a1.1 1.1 0 0 1-.7.3 1 1 0 0 1-.7-.4L.2 20.5a1 1 0 0 1-.2-.7 1 1 0 0 1 .3-.6L22.4.8a3.8 3.8 0 0 1 4.7 0l7.4 6.3V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v12.5l6.7 5.6a1 1 0 0 1 .3.6 1 1 0 0 1-.3.8z"
+                data-name="path3017"
+              />
+            </g>
+          </svg>
+          <span>خانه</span>
+        </div>
+        <app-favorit-home #FavoritHomeComponent></app-favorit-home>
+      </li>
+      <li class="place-item" id="place-item-work">
+        <div id="place-item-work-title" (click)="closeHome(); WorkComponent.openWork()">
+          <svg viewBox="0 0 47.88 39.27">
+            <g data-name="suitcase">
+              <path
+                d="M7.98 6.55v32.72h-3.2A4.85 4.85 0 0 1 0 34.36V11.45a4.84 4.84 0 0 1 4.78-4.9z"
+                data-name="left"
+              />
+              <path d="M9.58 6.54h28.73v32.72H9.58z" data-name="middle" />
+              <path
+                d="M39.9 6.55h3.16a4.85 4.85 0 0 1 4.79 4.9v22.91a4.86 4.86 0 0 1-4.79 4.91H39.9z"
+                data-name="right"
+              />
+              <path
+                d="M16.75 6.14V3.68A3.64 3.64 0 0 1 20.35 0h7.18a3.64 3.64 0 0 1 3.59 3.68v2.46h-2.4V3.68a1.21 1.21 0 0 0-1.19-1.22h-7.18a1.21 1.21 0 0 0-1.2 1.22v2.46z"
+                data-name="handle"
+              />
+            </g>
+          </svg>
+          <span>محل کار</span>
+        </div>
+        <app-favorit-work #WorkComponent></app-favorit-work>
+      </li>
+      <li class="place-item">
+        <div>
+          <svg viewBox="0 0 38.8 39">
+            <path
+              d="M16.8.1A20 20 0 0 0 1.6 11.5a16.4 16.4 0 0 0-1.6 8 16.5 16.5 0 0 0 1.7 8.1A19.6 19.6 0 0 0 28 37a19.8 19.8 0 0 0 10.3-12.6 22.4 22.4 0 0 0 0-9.7A19.6 19.6 0 0 0 22.3.2a21.4 21.4 0 0 0-5.6 0zM20 6a29.5 29.5 0 0 1 1.6 3.8c1.9 5.2 1.4 4.8 5.8 4.8 6.6 0 7 .5 3 3.7l-3.7 3-1 .8 1.2 4.2 1.2 4.6c0 1.2-1.3.8-5-1.6l-3.7-2.6-3.9 2.6a29.2 29.2 0 0 1-4.4 2.5c-.3 0-.5-.4-.5-.9a68.1 68.1 0 0 1 2-8.2c.1-.5-.7-1.3-3.4-3.5-2-1.7-3.6-3.1-3.6-3.5s0-.7.1-.7l4.8-.3 4.8-.2 1.4-4c1.9-5 2.4-5.7 3.3-4.5z"
+            />
+          </svg>
+          <span>سایر مکان ها</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+@import "../../../../scss/utility/utility.scss";
+
+.mini-map{
+  @include square(75px);
+  @extend %shadow ;
+  border : 2px solid $color-light;
+}
