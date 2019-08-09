@@ -102,7 +102,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
     this.setTarget();
     this.setView();
     this.addXYZTile();
-    this.addWMTSLayer();
+    //this.addWMTSLayer();
     //   this.addWMS();
     this.moveCursor();
     this.zoomCursor();
@@ -148,7 +148,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
 
 
   addWMTSLayer() {
-       // this.mapservice.map.addLayer(this.publicVar.WMTSLayer);
+     // this.mapservice.map.addLayer(this.publicVar.WMTSLayer);
   }
 
 
