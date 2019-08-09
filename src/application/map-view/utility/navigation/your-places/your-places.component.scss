@@ -1,0 +1,98 @@
+@import "../../../../../scss/utility/utility.scss";
+$heightItem: 60px;
+$rightPadding: 27px;
+.places {
+  display: none;
+  @extend %transition;
+  @extend %shadow;
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+  width: 380px;
+  background-color: $color-light;
+  height: 100vh;
+  transition: 0.5s;
+  overflow-x: hidden;
+  z-index: 1;
+  // margin-top: -30px;
+  .section-places {
+    background: $color-light-blue;
+    height: 58px;
+
+    .iconPlaces {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px 10px 20px;
+      align-items: center;
+      .menu {
+        // transition: all 0.3s ease;
+        svg {
+          height: 35px;
+          width: 35px;
+        }
+      }
+
+      .places-closer {
+        cursor: pointer;
+        svg {
+          height: 15px;
+          width: 15px;
+          fill: $color-light;
+        }
+      }
+    }
+
+    .place-items {
+      align-items: center;
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      color: darken($color: $color-gray-svg, $amount: 30);
+      .place-item {
+        height: $heightItem;
+        width: 100%;
+        border-bottom: 1px solid lighten($color: $color-gray-svg, $amount: 30);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        > div:first-child {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          height: $heightItem;
+          width: 100%;
+          padding-right: $rightPadding;
+          box-sizing: border-box;
+          cursor: pointer;
+
+          &:hover {
+            svg {
+              fill: $color-blue-hover;
+            }
+            span {
+              color: $color-blue-hover;
+            }
+          }
+          svg {
+            width: 19px;
+            fill: darken($color: $color-gray-svg, $amount: 10);
+          }
+          span {
+            margin: 0 10px;
+          }
+        }
+      }
+
+      #place-item-home, #place-item-work {
+        transition: all 0.5s linear;
+      }
+    }
+  }
+}
+
+// #direction-home-svg {
+//   margin-top: 3.5px;
+// }

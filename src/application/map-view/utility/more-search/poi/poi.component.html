@@ -1,0 +1,51 @@
+<div class="poi" id="poi" [@openClose]="this.publicVar.isOpenPoi ? 'open' : 'close'">
+  <div class="section-poi">
+    <div class="iconPoi">
+      <div appTooltips="منو" placement="bottom" delay="500">
+        <div class="menu" (click)="this.menu.openNavigation()">
+          <svg viewBox="0 0 139 139">
+            <style>
+              .st00 {
+                fill: none;
+                stroke: #fff;
+                stroke-width: 9;
+                stroke-miterlimit: 9;
+              }
+            </style>
+            <path d="M26.5 46.3h86M26.5 92.7h86M26.5 69.5h86" class="st00" />
+          </svg>
+        </div>
+      </div>
+      <div appTooltips="بستن" placement="bottom" delay="500">
+        <div id="poi-closer" class="poi-closer" (click)="closePoi()">
+          <svg height="512px" viewBox="0 0 512 512" width="512px">
+            <path
+              d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="poi-base">
+      <div>
+        <div class="point">
+          <svg width="15px" heigth="15px" fill="#fff" viewBox="0 0 1000 1000">
+            <path
+              d="M500 108c216.1 0 392 175.8 392 392S716.1 892 500 892c-216.2 0-392-175.8-392-392s175.8-392 392-392m0-98C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10z"
+            />
+            <path
+              d="M704.2 500c0 112.8-91.4 204.2-204.2 204.2-112.8 0-204.2-91.4-204.2-204.2 0-112.8 91.4-204.2 204.2-204.2 112.8 0 204.2 91.4 204.2 204.2z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="poi-searchbox ">
+        <input class="input-srart" id="point" type="text" placeholder="نام مکان موردنظر را وارد کنید..." />
+        <span class="input-underline"></span>
+      </div>
+    </div>
+    <div>
+      <button class="go">جستجو</button>
+    </div>
+  </div>
+</div>

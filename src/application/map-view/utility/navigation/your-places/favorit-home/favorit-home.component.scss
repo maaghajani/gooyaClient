@@ -1,0 +1,118 @@
+@import "../../../../../../scss/utility/utility.scss";
+
+$rightPadding: 27px;
+.place-item-home-addbox,
+.place-item-home-showExistLocation-editHomeBox,
+.place-item-home-showExistLocation-deleteHome {
+  @extend %radius;
+  display: none;
+  flex-direction: column;
+  border: 1px solid lighten($color: $color-gray-svg, $amount: 40);
+  width: 86%;
+  align-self: center;
+  margin: -14px $rightPadding 7px;
+  box-sizing: border-box;
+  padding: 0 15px;
+  input {
+    margin-top: 6px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid lighten($color: $color-gray-svg, $amount: 40);
+    padding: 7px 1px;
+    font-size: 0.9em;
+  }
+  button {
+    width: 50px;
+    height: 27px;
+    margin: 8px -3px;
+    align-self: flex-end;
+    @extend %radius;
+    background-color: $color-light-blue;
+    color: $color-light;
+    border: 1px solid rgba($color-gray-svg, 0.6);
+    font-size: 0.9em;
+    cursor: pointer;
+  }
+}
+.place-item-home-showExistLocation {
+  @extend %radius;
+  display: none;
+  width: 86%;
+  margin-top: -14px;
+  margin-right: $rightPadding;
+  margin-left: $rightPadding;
+  border: 1px solid lighten($color: $color-gray-svg, $amount: 40);
+  height: 41px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    font-size: 0.9em;
+    width: 83%;
+    overflow: hidden;
+  }
+  .exist-home-button {
+    margin-left: -4px;
+    .edit-home,
+    .remove-home,
+    .direction-home {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 1px 2px;
+      margin: 0 1px;
+      :hover {
+        svg {
+          fill: $color-gray-svg;
+        }
+      }
+      svg {
+        fill: $color-light-blue;
+        width: 11px;
+        vertical-align: middle;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.place-item-home-showExistLocation-editHomeBox {
+  width: 88%;
+  .editHomeBox-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    button:last-child {
+      margin: 8px;
+    }
+    button:hover {
+      color: $color-light-blue;
+      background: $color-light;
+      border: 1px solid $color-light-blue;
+    }
+  }
+}
+
+.place-item-home-showExistLocation-deleteHome {
+  width: 88%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 41px;
+  span {
+    font-size: 0.9em;
+  }
+  > div {
+    button {
+      width: 40px;
+      font-size: 0.85em;
+      height: 20px;
+      padding-bottom: 2px;
+    }
+    button:first-child {
+      margin: 0 8px;
+    }
+  }
+}

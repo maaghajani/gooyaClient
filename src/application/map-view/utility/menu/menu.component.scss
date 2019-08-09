@@ -1,0 +1,25 @@
+@import '../../../../scss/utility/utility.scss';
+.menu{
+    display: flex;
+    justify-content: center;
+    transition: all 0.3s ease;
+    @extend %transition;
+
+    button{
+        border: none;
+        background-color: transparent;
+        height: 32px;
+        width: 37px;
+        margin-right: 10px;
+        margin-top: 3px;
+        // opacity: 0.72;
+        cursor: pointer;
+        align-items: center;
+        // transition: all 0.3s ease;
+
+    }
+
+    
+
+}
+

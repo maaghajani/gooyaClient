@@ -1,0 +1,21 @@
+<div class="verification-code">
+    <span>کد تایید</span>
+    <form (ngSubmit)="onSubmitPass()" #verificationCode="ngForm">
+      <input
+        type="text"
+        class="verify"
+        placeholder="کد ارسالی"
+        ngModel
+        name="verify"
+        required
+        pattern="[0-9]6"
+      />
+      <button type="submit" class="send" [disabled]="!verificationCode.valid">
+        ارسال
+      </button>
+    </form>
+  </div>
+  
+  
+  
+  

@@ -1,0 +1,174 @@
+@import "../../../../scss/utility/utility.scss";
+@import "../../../../scss/utility/dimen";
+
+.login-page-box {
+  width: 100%;
+  height: 100%;
+
+  .form-container {
+  @extend %radius;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    form {
+      height: 85%;
+      .login-page {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 43px;
+
+        & > span:first-child {
+          font-weight: bold;
+          font-size: 1.3em;
+          margin-bottom: 10px;
+        }
+
+        .login-username,
+        .login-pass {
+          justify-content: space-between;
+          align-items: center;
+          width: 90%;
+          margin: 10px;
+          .icon {
+            width: 10%;
+            fill: $color-gray-svg;
+            height: 28px;
+          }
+
+          & > input {
+            @extend %radius;
+            background: linear-gradient(
+              90deg,
+              rgba($color-theme-secondary, 0.8) 0%,
+              rgba($color-theme-primary, 0.6) 50%,
+              rgba($color-theme-secondary, 0.8) 100%
+            );
+            font-size: 0.9em;
+            width: 85%;
+            height: 30px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba($color-gray-svg, 0.6);
+            vertical-align: middle;
+          }
+
+          &:focus-within {
+            input {
+              background: transparent;
+            }
+            .icon {
+              fill: $color-theme-primary;
+            }
+          }
+        }
+        .login-pass {
+          position: relative;
+          .toggle-password {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            padding: 3px;
+            svg {
+              fill: $color-gray-svg;
+            }
+          }
+        }
+        .enter {
+          margin-top: 15px;
+          width: 30%;
+        }
+      }
+    }
+
+    & > div:last-child {
+      align-self: flex-start;
+      margin: 6px 11px;
+      align-items: center;
+      div {
+        margin: 0 3px;
+      }
+      a {
+        font-size: 0.85em;
+        margin: 2px 4px;
+        align-self: start;
+        &:hover {
+          cursor: pointer;
+          color: $color-blue-hover;
+        }
+      }
+      .line {
+        height: 13px;
+        width: 1px;
+        background: $color-gray-svg;
+      }
+    }
+  }
+
+  .img {
+  @extend %radius;
+    width: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    .login-closer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 5px;
+      svg {
+        height: 13px;
+        width: 11px;
+        fill: rgba($color: $color-dark, $alpha: 0.8);
+      }
+    }
+  }
+}
+
+// --- error---
+.error-box {
+  width: 100%;
+  height: 21px;
+}
+.error {
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 9px;
+  box-sizing: border-box;
+  svg {
+    width: 9%;
+  }
+  span {
+    color: $color-red-required;
+    font-size: 0.8em;
+    margin: 0 12px;
+    width: 80%;
+  }
+}
+// --- error---
+
+// --- forget pass ---
+.forget-pass-box {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+// --- forget pass ---
+
+//  ---- verification-code ----
+.verification-code {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+//  ---- verification-code ----
+
+// ---- im not robat ----  
+.robat {
+  align-self: flex-start;
+  margin: 0 14px;
+}
+// ---- im not robat ----
