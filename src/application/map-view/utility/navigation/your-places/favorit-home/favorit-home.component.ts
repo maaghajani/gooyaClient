@@ -1,10 +1,4 @@
-import { transform } from 'ol/proj.js';
-import { Component, OnInit, Input } from '@angular/core';
-import { toStringXY } from 'ol/coordinate.js';
-import Feature from 'ol/Feature.js';
-import { Point } from 'ol/geom.js';
-import { Pointer as PointerInteraction } from 'ol/interaction.js';
-import { Vector as VectorLayer } from 'ol/layer.js';
+import { Component, OnInit } from '@angular/core';
 import { IranBoundryService } from 'src/application/shared/services/iranBoundry.service';
 import { MapService } from 'src/application/shared/services/map.service';
 import { PublicVarService } from 'src/application/shared/services/publicVar.service';
@@ -14,13 +8,13 @@ import { DirectionComponent } from './../../../direction/direction.component';
 @Component({
   selector: 'app-favorit-home',
   templateUrl: './favorit-home.component.html',
-  styleUrls: ['./favorit-home.component.scss']
+  styleUrls: ['./favorit-home.component.scss'],
 })
 export class FavoritHomeComponent implements OnInit {
   // ----for home ----
   existHome: boolean = false;
   homeAddres: string;
-  homelocation: Array<number> = [5971537, 3935664];
+  homelocation: Array<number> = [5723891.316850067, 4264880.430199694];
   itemHeight = '60px';
   // ----for home ----
   constructor(
@@ -28,16 +22,16 @@ export class FavoritHomeComponent implements OnInit {
     public publicVar: PublicVarService,
     public publicVarYourPlace: PubliYourPlaceVariableService,
     public IranBoundry: IranBoundryService,
-    public direction: DirectionComponent,
+    public direction: DirectionComponent
   ) {}
 
   ngOnInit() {}
 
   // ----this function for save Home location ----
 
-  //in this function has 2 part ,part 1 if home open ,we must close home with click and remove Point
-  ///part 2 has 2 section:section 1 if Location of home exist , we must show location and when click on it , map goes to that location
-  //section 2 : if Location of home does not exist, we must get user's home Location and save that
+  // in this function has 2 part ,part 1 if home open ,we must close home with click and remove Point
+  /// part 2 has 2 section:section 1 if Location of home exist , we must show location and when click on it , map goes to that location
+  // section 2 : if Location of home does not exist, we must get user's home Location and save that
   openHome() {
     const item = document.getElementById('place-item-home');
     const homeAddbox = document.getElementById('place-item-home-addbox');
@@ -59,7 +53,7 @@ export class FavoritHomeComponent implements OnInit {
       if (this.existHome) {
         // show add loaction div
         item.style.height = '100px';
-        //---- for better show ----
+        // ---- for better show ----
         setTimeout(() => {
           homeExist.style.display = 'flex';
         }, 500);
@@ -67,18 +61,18 @@ export class FavoritHomeComponent implements OnInit {
         this.homeAddres = 'اسدی ، ستارخان، منطقه 5 ، تهران';
         // this.homelocation = [31, 52];
       } else {
-        //if Location of home does not exist
+        // if Location of home does not exist
         // show add loaction div
         item.style.height = '146px';
-        //---- for better show ----
+        // ---- for better show ----
         setTimeout(() => {
           homeAddbox.style.display = 'flex';
         }, 500);
-        this.publicVarYourPlace.CreatAddresFromPoint('place-item-home-addbox-input')
+        this.publicVarYourPlace.CreatAddresFromPoint('place-item-home-addbox-input', undefined, undefined);
       }
     }
   }
-  //----home addBox function ----
+  // ----home addBox function ----
   addNewHome() {
     const homeAddbox = document.getElementById('place-item-home-addbox');
     homeAddbox.style.display = 'none';
@@ -87,12 +81,12 @@ export class FavoritHomeComponent implements OnInit {
     this.publicVarYourPlace.removePoint();
     this.openHome();
   }
-  //----home addBox function ----
+  // ----home addBox function ----
 
-  //----home exist function ----
+  // ----home exist function ----
   // -----if use your palace component give error =>WARNING in Circular dependency detected, so we shuold write
   closePlaces() {
-    this.publicVarYourPlace.closePlace()
+    this.publicVarYourPlace.closePlace();
     this.publicVarYourPlace.isOpenHome = true;
     this.openHome();
   }
@@ -105,13 +99,7 @@ export class FavoritHomeComponent implements OnInit {
     setTimeout(e => {
       this.direction.openDirection();
       this.direction.getClickLoctionAddress();
-      const inside = require('point-in-polygon');
-      const startPoint = document.getElementById('start-point') as HTMLInputElement;
-      const StringCoord = toStringXY(this.homelocation, 0);
-      this.publicVar.isDirectionInIran = inside(this.homelocation, this.IranBoundry.Iran);
-      if ( this.publicVar.isDirectionInIran) {
-        startPoint.value = StringCoord;
-      }
+      this.direction.setAddressPoint(this.homelocation);
     }, this.publicVar.timeUtility / 3);
   }
 
@@ -123,8 +111,11 @@ export class FavoritHomeComponent implements OnInit {
     item.style.height = '146px';
     homeExist.style.display = 'none';
     homeEdit.style.display = 'flex';
-    this.publicVarYourPlace.CreatAddresFromPoint('place-item-home-showExistLocation-editHomeBox-input')
-    
+    this.publicVarYourPlace.CreatAddresFromPoint(
+      'place-item-home-showExistLocation-editHomeBox-input',
+      undefined,
+      undefined
+    );
   }
   cancelEditHome() {
     this.publicVarYourPlace.removePoint();
@@ -136,7 +127,7 @@ export class FavoritHomeComponent implements OnInit {
     homeEdit.style.display = 'none';
   }
   saveEditHome() {
-    //for go bak to home
+    // for go bak to home
     this.cancelEditHome();
   }
   deleteHome() {
@@ -159,7 +150,7 @@ export class FavoritHomeComponent implements OnInit {
     homeDelete.style.display = 'none';
   }
 
-  //----home exist function ----
+  // ----home exist function ----
   addPlaces() {
     // console.log(this.mapservice.map.getLayers());
   }

@@ -40,7 +40,7 @@ export class SigninComponent implements OnInit, DoCheck {
   onSubmitSignin() {
     // console.log(this.signinForm);
     this.showVerificationCode();
-    /* ---------------sms------------------------
+    /*---------------sms------------------------
     const urlToken: string = 'https://RestfulSms.com/api/Token';
     const urlSMS: string = 'https://RestfulSms.com/api/MessageSend';
     const BodyToken = {
@@ -63,11 +63,12 @@ export class SigninComponent implements OnInit, DoCheck {
       const SmsHeader = new HttpHeaders({
         'x-sms-ir-secure-token': TokenSMS[0],
         'Content-Type': 'application/json',
+
       });
       // SmsHeader.append('x-sms-ir-secure-token' , TokenSMS[0])
       const httpOption = { headers: SmsHeader };
       console.log(httpOption);
-      this.httpClient.post(urlToken, BodySMS, httpOption).toPromise().then(e => {
+      this.httpClient.post(urlSMS, BodySMS, httpOption).toPromise().then(e => {
         console.log(e);
       });
     });

@@ -101,9 +101,9 @@ export class BaseMapComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.setTarget();
     this.setView();
-    this.addXYZTile();
-    //this.addWMTSLayer();
-    //   this.addWMS();
+    // this.addXYZTile();
+    // this.addWMTSLayer();
+    this.addWMS();
     this.moveCursor();
     this.zoomCursor();
   }
@@ -113,6 +113,9 @@ export class BaseMapComponent implements OnInit, DoCheck {
       this.setFeedbackPosition();
     });
     this.rightControlePosition();
+    console.log('resZomm: ' + this.mapservice.map.getView().getZoom())
+
+
   }
 
   // ---- ol function ----
@@ -134,7 +137,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
     this.mapservice.map.addLayer(this.publicVar.AreaLAyer);
     this.mapservice.map.addLayer(this.publicVar.terrianLayer);
     // this.mapservice.map.addLayer(this.publicVar.MapLayer);
-    // this.mapservice.map.addLayer(this.publicVar.poiLayer);
+    this.mapservice.map.addLayer(this.publicVar.poiLayer);
   }
   // ---- add kce Layer ---
   // ---- ol function ----

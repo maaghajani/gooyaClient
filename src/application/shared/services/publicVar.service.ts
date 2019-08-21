@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import TileLayer from 'ol/layer/Tile';
+// import TileLayer from 'ol/layer/Tile';
 import Map from 'ol/Map';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
-//import proj from 'ol/proj';
-//import extent from 'ol/extent';
+// import proj from 'ol/proj';
+// import extent from 'ol/extent';
 import WMTS from 'ol/source/WMTS';
 import optionsFromCapabilities from 'ol/source/WMTS';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 // import BingMaps from 'ol/source/BingMaps.js';
+import { Image as ImageLayer, Tile as TileLayer } from 'ol/layer.js';
+import ImageWMS from 'ol/source/ImageWMS';
 @Injectable()
 export class PublicVarService {
-  constructor() { }
+  constructor() {}
 
   // ---- for animation ----
   public isOpenLogin = false;
@@ -74,10 +76,10 @@ export class PublicVarService {
 
   // ---- wmts params ----
   projLike: ol.ProjectionLike = 'EPSG:3857';
-  //projection: ol.proj.Projection = proj.get(this.projLike);
-  //projectionExtent: ol.Extent = this.projection.getExtent();
-  //size: number = extent.getWidth(this.projectionExtent) / 256;
-  //resolution: Array<number> = new Array(21).map((res, index) => this.size / Math.pow(2 , index ) );
+  // projection: ol.proj.Projection = proj.get(this.projLike);
+  // projectionExtent: ol.Extent = this.projection.getExtent();
+  // size: number = extent.getWidth(this.projectionExtent) / 256;
+  // resolution: Array<number> = new Array(21).map((res, index) => this.size / Math.pow(2 , index ) );
   matrixIds: Array<string> = new Array(21).map((mat, idx) => 'EPSG:3857:' + idx);
 
   MapLayer = new TileLayer({
@@ -85,42 +87,49 @@ export class PublicVarService {
       url: 'http://89.32.249.124:3000/api/Map/wms',
       params: {
         Layers: [
-          'Kheizaran:POI',
-          'Kheizaran:GREEN_AREA',
-          'Kheizaran:RIVER_LAKE',
           'Kheizaran:InterState',
           'Kheizaran:MajorStreets',
           'Kheizaran:MinorStreets',
-          'Kheizaran:Streets'
+          'Kheizaran:Streets',
         ],
-        Tiled: true
+        Tiled: true,
       },
       serverType: 'geoserver',
-      transition: 0
-    })
+      transition: 0,
+    }),
   });
   poiLayer = new TileLayer({
     source: new TileWMS({
       url: 'http://89.32.249.124:3000/api/Map/wms',
       params: {
-        Layers: ['Kheizaran:POI'],
-        Tiled: true
+        Layers: [
+          // 'Kheizaran:POI',
+        'Kheizaran:PROVINCE_POINT' ],
+        Tiled: true,
       },
       serverType: 'geoserver',
-      transition: 0
-    })
+      transition: 0,
+    }),
   });
   AreaLAyer = new TileLayer({
     source: new TileWMS({
       url: 'http://89.32.249.124:3000/api/Map/wms',
       params: {
-        Layers: ['Kheizaran:AREAS'],
-        Tiled: true
+        Layers: [
+          // 'Kheizaran:PROVINCE',
+          // 'Kheizaran:IRAN_BOARDER',
+          // 'Kheizaran:GREEN_AREA',
+          // 'Kheizaran:RIVER_LAKE',
+          // 'Kheizaran:OCEANS',
+          'Kheizaran:KCE_Layer'
+        ],
+        Tiled: true,
       },
       serverType: 'geoserver',
-      transition: 0
-    })
+      transition: 0,
+    }),
   });
+
 
   // ----google satelite----
   SatelliteLayer = new TileLayer({
@@ -128,28 +137,39 @@ export class PublicVarService {
     opacity: 1.0,
     source: new XYZ({
       //  url: 'http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}&s=Ga'  //----with lable ----
-      url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}'
-    })
+      url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}',
+    }),
   });
   // ----google satelite----
   // ----DEM----
+  // terrianLayer = new TileLayer({
+  //   // opacity:0.5,
+  //   visible: false,
+  //   source: new XYZ({
+  //     url: `https://api.mapbox.com/styles/v1/marziyehbashiri/cjy5kiei60s9k1co5ct9dyx1h/tiles/
+  //     256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFyeml5ZWhiYXNoaXJpIiwiYSI6ImNqeTVoaGI4eTA3MG8zbGxlY2t5cWI1ZW4ifQ.c0urKH-5ikaWwrwN4Ge9gg`,
+  //   }),
+  // });
+
   terrianLayer = new TileLayer({
-    // opacity:0.5,
+    opacity: 0.3,
     visible: false,
+
     source: new XYZ({
-      url:
-        'https://api.mapbox.com/styles/v1/marziyehbashiri/cjy5kiei60s9k1co5ct9dyx1h/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFyeml5ZWhiYXNoaXJpIiwiYSI6ImNqeTVoc3JyYzA2eGozb21samVkYXQzYWYifQ.Mu1UMMRnTooaL2uAjNpl-Q'
-    })
+      // attributions: 'GooyaMap © ',
+      url: '	http://mt0.google.com/vt/lyrs=t&hl=en&x={x}&y={y}&z={z}',
+      // url: 'http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}'
+    }),
   });
+  // ----DEM----
 
   xyzLayer = new TileLayer({
     opacity: 1,
-    source: new XYZ(
-      {
-        attributions: 'GooyaMap © ',
-        url: 'http://89.32.249.124:3000/api/Map/Tile/{z}/{y}/{x}'
-        // url: 'https://localhost:44309/api/Map/Tile/{z}/{y}/{x}'
-      })
+    source: new XYZ({
+      attributions: 'GooyaMap © ',
+      url: 'http://89.32.249.124:3000/api/Map/Tile/{z}/{y}/{x}',
+      // url: 'https://localhost:44309/api/Map/Tile/{z}/{y}/{x}'
+    }),
   });
 
   // WMTSLayer = new TileLayer({
@@ -189,11 +209,6 @@ export class PublicVarService {
     };
     client.send();
   }
-
-
-
-
-  // ----DEM----
 
   // ----bing satelite----
   // SatelliteLayer = new TileLayer({

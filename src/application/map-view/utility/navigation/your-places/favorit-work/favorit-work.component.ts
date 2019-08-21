@@ -10,7 +10,7 @@ import { IranBoundryService } from 'src/application/shared/services/iranBoundry.
 @Component({
   selector: 'app-favorit-work',
   templateUrl: './favorit-work.component.html',
-  styleUrls: ['./favorit-work.component.scss']
+  styleUrls: ['./favorit-work.component.scss'],
 })
 export class FavoritWorkComponent implements OnInit {
   itemHeight = 60;
@@ -18,14 +18,7 @@ export class FavoritWorkComponent implements OnInit {
   isActiveEditWork = false;
   ActiveEditWorkElementIndex: number;
   ActiveDeleteWorkElementIndex: number;
-  workAddresses = [
-    // {addres: 'ادرس 1' , location:[]},
-    // {addres: 'ادرس 2', location:[]},
-    // {addres: 'ادرس 3', location:[]},
-    // {addres: 'ادرس 4', location:[]},
-    // {addres: 'ادرس 5', location:[]},
-    // {addres: 'ادرس 6', location:[]}
-  ];
+  workAddresses = [];
   constructor(
     private mapservice: MapService,
     public publicVar: PublicVarService,
@@ -51,14 +44,14 @@ export class FavoritWorkComponent implements OnInit {
       this.publicVarYourPlace.isOpenWork = false;
     } else {
       this.publicVarYourPlace.isOpenWork = true;
-      //---- for better show ----
+      // ---- for better show ----
       // we dont have any address
       if (this.workAddresses.length == 0) {
         console.log('donthaswork');
         item.style.height = '146px';
         setTimeout(() => {
           workAddbox.style.display = 'flex';
-          this.publicVarYourPlace.CreatAddresFromPoint('place-item-work-addbox-input');
+          this.publicVarYourPlace.CreatAddresFromPoint('place-item-work-addbox-input', undefined,undefined);
         }, 500);
       } else {
         console.log('haswork');
@@ -74,14 +67,22 @@ export class FavoritWorkComponent implements OnInit {
 
   addFirstNewWork() {
     const input = document.getElementById('place-item-work-addbox-input') as HTMLInputElement;
-    const inputVal = input.value.split(',');
-    this.workAddresses.push({ addres: 'ادرس 1', location: [parseFloat(inputVal[0]), parseFloat(inputVal[1])] });
-    this.publicVarYourPlace.removePoint();
-    this.publicVarYourPlace.isOpenWork = false;
-    this.openWork();
+    const inputName = document.getElementById('place-item-work-addbox-input-name') as HTMLInputElement;
+    if (inputName.value) {
+      const inputVal = input.value.split(',');
+      this.workAddresses.push({
+        addres: inputName.value,
+        location: [parseFloat(inputVal[0]), parseFloat(inputVal[1])],
+      });
+      this.publicVarYourPlace.removePoint();
+      this.publicVarYourPlace.isOpenWork = false;
+      this.openWork();
+    }
   }
 
   GotoNewWork() {
+    const inputName = document.getElementById('place-item-work-addbox-add-input-name') as HTMLInputElement;
+    inputName.value = null;
     if (this.ActiveEditWorkElementIndex >= 0) {
       this.cancelEditWork(this.ActiveEditWorkElementIndex);
     }
@@ -90,31 +91,36 @@ export class FavoritWorkComponent implements OnInit {
     addNewWork.style.display = 'flex';
     creatWork.style.display = 'none';
     // create point layer
-    this.publicVarYourPlace.CreatAddresFromPoint('place-item-work-addbox-add-input');
+    this.publicVarYourPlace.CreatAddresFromPoint('place-item-work-addbox-add-input',      undefined,
+    undefined);
   }
 
   addNewWork() {
-    const item = document.getElementById('place-item-work'); //LI
-    const creatWork = document.getElementById('place-item-work-showExistLocations-addbox-creatnew') as HTMLElement;
-    const addWork = document.getElementById('place-item-work-showExistLocations-addbox-add') as HTMLElement;
-    const existLocation = document.getElementById('place-item-work-showExistLocation-box') as HTMLElement;
-    const input = document.getElementById('place-item-work-addbox-add-input') as HTMLInputElement;
-    const inputVal = input.value.split(',');
-    addWork.style.display = 'none';
-    creatWork.style.display = 'flex';
-    // remove point layer
-    this.publicVarYourPlace.removePoint();
-    // handel height work li by browser size
-    const browserHeight = document.body.offsetHeight;
-    const maxHeightLiWork = browserHeight - 4 * 60 - 20; // 4 *60 for blue header and home and other place and work -20 tolerance
-    if (item.offsetHeight > maxHeightLiWork) {
-      // adad tajrobi bedast amadeh
-      existLocation.style.maxHeight = maxHeightLiWork - 22 + 'px';
+    const inputName = document.getElementById('place-item-work-addbox-add-input-name') as HTMLInputElement;
+    if (inputName.value) {
+      const item = document.getElementById('place-item-work'); //LI
+      const addWork = document.getElementById('place-item-work-showExistLocations-addbox-add') as HTMLElement;
+      const creatWork = document.getElementById('place-item-work-showExistLocations-addbox-creatnew') as HTMLElement;
+      const existLocation = document.getElementById('place-item-work-showExistLocation-box') as HTMLElement;
+      const input = document.getElementById('place-item-work-addbox-add-input') as HTMLInputElement;
+      const inputVal = input.value.split(',');
+      addWork.style.display = 'none';
+      creatWork.style.display = 'flex';
+      // remove point layer
+      this.publicVarYourPlace.removePoint();
+      // handel height work li by browser size
+      const browserHeight = document.body.offsetHeight;
+      const maxHeightLiWork = browserHeight - 4 * 60 - 20; // 4 *60 for blue header and home and other place and work -20 tolerance
+      if (item.offsetHeight > maxHeightLiWork) {
+        // adad tajrobi bedast amadeh
+        existLocation.style.maxHeight = maxHeightLiWork - 22 + 'px';
+      }
+
+      this.workAddresses.push({
+        addres: inputName.value,
+        location: [parseFloat(inputVal[0]), parseFloat(inputVal[1])],
+      });
     }
-    this.workAddresses.push({
-      addres: 'ادرس 1' + inputVal[0],
-      location: [parseFloat(inputVal[0]), parseFloat(inputVal[1])]
-    });
   }
   cancelNewWork() {
     const creatWork = document.getElementById('place-item-work-showExistLocations-addbox-creatnew') as HTMLElement;
@@ -138,14 +144,8 @@ export class FavoritWorkComponent implements OnInit {
     setTimeout(e => {
       this.direction.openDirection();
       this.direction.getClickLoctionAddress();
-      const inside = require('point-in-polygon');
-      const startPoint = document.getElementById('start-point') as HTMLInputElement;
       const elementLocation = this.workAddresses[ElmentIndex].location;
-      const StringCoord = toStringXY(elementLocation, 0);
-      this.publicVar.isDirectionInIran = inside(elementLocation, this.IranBoundry.Iran);
-      if (this.publicVar.isDirectionInIran) {
-        startPoint.value = StringCoord;
-      }
+      this.direction.setAddressPoint(elementLocation);
     }, this.publicVar.timeUtility / 3);
   }
   // --- for direct Work ----
@@ -155,12 +155,18 @@ export class FavoritWorkComponent implements OnInit {
     this.cancelOtherLiWork();
     this.ActiveEditWorkElementIndex = ElmentIndex;
     const existWork = document.getElementById('place-item-work-showExistLocation-' + ElmentIndex) as HTMLElement;
+    const existWorkCoord = document.getElementById('place-item-home-showExistLocation-editWork-input-' + ElmentIndex) as HTMLInputElement;
+    const coordVal=(existWorkCoord.value).split(',')
     const deletetWork = document.getElementById(
       'place-item-home-showExistLocation-editWork-' + ElmentIndex
     ) as HTMLElement;
     existWork.style.display = 'none';
     deletetWork.style.display = 'flex';
-    this.publicVarYourPlace.CreatAddresFromPoint('place-item-home-showExistLocation-editWork-input-' + ElmentIndex);
+    this.publicVarYourPlace.CreatAddresFromPoint(
+      'place-item-home-showExistLocation-editWork-input-' + ElmentIndex,
+      parseFloat(coordVal[0]),
+      parseFloat(coordVal[1])
+    );
     console.log(this.workAddresses);
   }
 
@@ -190,7 +196,7 @@ export class FavoritWorkComponent implements OnInit {
     deletetWork.style.display = 'none';
     this.workAddresses[ElmentIndex] = {
       addres: 'ادرس' + inputVal[0],
-      location: [parseFloat(inputVal[0]), parseFloat(inputVal[1])]
+      location: [parseFloat(inputVal[0]), parseFloat(inputVal[1])],
     };
     console.log(this.workAddresses);
 

@@ -56,6 +56,7 @@ import { AboutUsComponent } from './map-view/utility/navigation/about-us/about-u
 import { FavoritHomeComponent } from './map-view/utility/navigation/your-places/favorit-home/favorit-home.component';
 import { FavoritWorkComponent } from './map-view/utility/navigation/your-places/favorit-work/favorit-work.component';
 // ----for get info user----
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,11 @@ import { FavoritWorkComponent } from './map-view/utility/navigation/your-places/
     HttpClientModule,
     BrowserAnimationsModule,
 
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    NgxUiLoaderModule, // import NgxUiLoaderModule
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }), // import NgxUiLoaderHttpModule. By default, it will show background loader.
+    // If you need to show foreground spinner, do as follow:
+    // NgxUiLoaderHttpModule.forRoot({ showForeground: true })
   ],
   exports: [
     BaseMapComponent,

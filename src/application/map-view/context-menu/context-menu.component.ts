@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-context-menu',
   templateUrl: './context-menu.component.html',
-  styleUrls: ['./context-menu.component.scss']
+  styleUrls: ['./context-menu.component.scss'],
 })
 export class ContextMenuComponent implements OnInit {
   clickCoord: Array<number>;
@@ -105,7 +105,7 @@ export class ContextMenuComponent implements OnInit {
 
         const origin = {
           left: left,
-          top: top
+          top: top,
         };
         setPosition(origin);
         return false;
@@ -124,46 +124,16 @@ export class ContextMenuComponent implements OnInit {
   // ---- get right click positon and zoom leve base map to set map center ----
   // ----Direction FromTo Here ----
   DirectionFromToHere(elemntID: string) {
-    /* aval noghteh i ra k click kardim az mercator b decimal tabdil mikonin 
-    bad yek darkhast az tariqi api GetMapLIDByPoint b samte server mifrestim ta nam va Lid noqteh click 
+    /* aval noghteh i ra k click kardim az mercator b decimal tabdil mikonin
+    bad yek darkhast az tariqi api GetMapLIDByPoint b samte server mifrestim ta nam va Lid noqteh click
     shodeh ra b shart anke dakhel iran bashad biyabim*/
     this.direction.openDirection();
+    this.direction.removeRoutLayer('routing');
     // baraye anke click dar naghsheh kar konad
     this.direction.getClickLoctionAddress();
-    const inside = require('point-in-polygon');
     const htmlElement = document.getElementById(elemntID) as HTMLInputElement;
-    this.publicVar.isDirectionInIran = inside(this.clickCoord, this.IranBoundry.Iran);
-    if (this.publicVar.isDirectionInIran) {
-      const url =
-        'http://89.32.249.124:1398/api/map/GetMapLIDByPoint?x=' + this.clickCoord[0] + '&y=' + this.clickCoord[1];
-      this.httpClient
-        .get(url)
-        .toPromise()
-        .then(data => {
-          console.log(data);
-          const responseJson = JSON.parse(data.toString());
-          const lenResult = Object.keys(responseJson).length;
-          if (lenResult > 0) {
-            this.publicVar.isClickHasNetwork = true;
-            this.publicVar.responseGetMapNameByPoint = responseJson[0].F_NAME;
-            this.publicVar.responseGetMapLIDByPoint = responseJson[0].LID;
-          } else {
-            this.publicVar.isClickHasNetwork = false;
-            this.publicVar.responseGetMapNameByPoint =null;
-            this.publicVar.responseGetMapLIDByPoint = null;
-          }
-        })
-        .then(() => {
-          if (elemntID === 'start-point') {
-            this.publicVar.startPointLocation = this.clickCoord;
-            this.publicVar.startLID = this.publicVar.responseGetMapLIDByPoint;
-          } else {
-            this.publicVar.endPointLocation = this.clickCoord;
-            this.publicVar.endLID = this.publicVar.responseGetMapLIDByPoint;
-          }
-          htmlElement.value = this.publicVar.responseGetMapNameByPoint;
-        });
-    }
+    htmlElement.focus();
+    this.direction.setAddressPoint(this.clickCoord);
   }
   // ----Direction FromTo Here ----
 
@@ -185,10 +155,10 @@ export class ContextMenuComponent implements OnInit {
           projection: this.mapservice.project,
           center: [this.clickCoord[0], this.clickCoord[1]],
           zoom: this.zoom,
-          extent: [4786738, 2875744, 7013127, 4721671]
+          extent: [4786738, 2875744, 7013127, 4721671],
         }),
         layers: [this.publicVar.AreaLAyer, this.publicVar.MapLayer],
-        controls: []
+        controls: [],
       });
       // ---- for set address value  ----
       const addressValue = this.publicVar.missingMap.getView().getCenter();
@@ -229,11 +199,11 @@ export class ContextMenuComponent implements OnInit {
           projection: this.mapservice.project,
           center: [this.clickCoord[0], this.clickCoord[1]],
           zoom: this.zoom,
-          extent: [4786738, 2875744, 7013127, 4721671]
+          extent: [4786738, 2875744, 7013127, 4721671],
         }),
         layers: [this.publicVar.AreaLAyer, this.publicVar.MapLayer],
         controls: [],
-        renderer: 'canvas'
+        renderer: 'canvas',
       });
       // ---- for set address value  ----
       const addressValue = this.publicVar.errorMap.getView().getCenter();

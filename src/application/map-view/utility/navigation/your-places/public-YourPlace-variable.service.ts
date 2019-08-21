@@ -9,11 +9,10 @@ import Feature from 'ol/Feature.js';
 import { Point } from 'ol/geom.js';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PubliYourPlaceVariableService {
   constructor(public publicVar: PublicVarService, private mapservice: MapService) {}
-
   isOpenHome: boolean = false;
   isOpenWork: boolean = false;
   isOpenOtherPlace: boolean = false;
@@ -24,9 +23,9 @@ export class PubliYourPlaceVariableService {
       anchor: [0.5, 1],
       crossOrigin: 'anonymous',
       scale: 0.3,
-      src: '../../../../../assets/img/your-place.png'
+      src: '../../../../../assets/img/your-place.png',
       // imgSize:[25,25]
-    })
+    }),
   });
   closePlace() {
     this.publicVar.isOpenPlaces = false;
@@ -44,7 +43,7 @@ export class PubliYourPlaceVariableService {
       // set z index for layer always top
       zIndex: 1002,
       // ----set name for layer bacause we want remove layer by name
-      name: 'yourPlace'
+      name: 'yourPlace',
     });
     // for return value and show on input
     this.mapservice.map.addLayer(this.maplayer);
@@ -54,12 +53,12 @@ export class PubliYourPlaceVariableService {
           handleDownEvent: handleDownEvent,
           handleDragEvent: handleDragEvent,
           handleMoveEvent: handleMoveEvent,
-          handleUpEvent: handleUpEvent
+          handleUpEvent: handleUpEvent,
         });
-        this.coordinate_ = null; //Save mouse click coordinates
-        this.cursor_ = 'pointer'; //Save the current mouse cursor style
-        this.feature_ = null; //Save the elements that the mouse clicks on and intersects
-        this.previousCursor_ = undefined; //Save the last mouse cursor style
+        this.coordinate_ = null; // Save mouse click coordinates
+        this.cursor_ = 'pointer'; // Save the current mouse cursor style
+        this.feature_ = null; // Save the elements that the mouse clicks on and intersects
+        this.previousCursor_ = undefined; // Save the last mouse cursor style
       }
 
       if (PointerInteraction) Drag.__proto__ = PointerInteraction;
@@ -68,8 +67,8 @@ export class PubliYourPlaceVariableService {
 
       return Drag;
     })(PointerInteraction);
-    //Function handling "down" events.
-    //If the function returns true then a drag sequence is started
+    // Function handling "down" events.
+    // If the function returns true then a drag sequence is started
     function handleDownEvent(evt) {
       var map = evt.map;
       // Return the mouse click on the intersecting elements
@@ -78,13 +77,13 @@ export class PubliYourPlaceVariableService {
       });
 
       if (feature) {
-        this.coordinate_ = evt.coordinate; //Save the coordinates of the mouse click
-        this.feature_ = feature; //Save the feature that intersects the coordinates of the mouse click
+        this.coordinate_ = evt.coordinate; // Save the coordinates of the mouse click
+        this.feature_ = feature; // Save the feature that intersects the coordinates of the mouse click
       }
-      return !!feature; //equivalent to Boolean(feature)
+      return !!feature; // equivalent to Boolean(feature)
     }
-    //Function handling "drag" events.
-    //This function is called on "move" events during a drag sequence
+    // Function handling "drag" events.
+    // This function is called on "move" events during a drag sequence
     function handleDragEvent(evt) {
       var deltaX = evt.coordinate[0] - this.coordinate_[0];
       var deltaY = evt.coordinate[1] - this.coordinate_[1];
@@ -95,9 +94,9 @@ export class PubliYourPlaceVariableService {
       this.coordinate_[0] = evt.coordinate[0];
       this.coordinate_[1] = evt.coordinate[1];
     }
-    //Function handling "move" events.
-    //This function is called on "move" events, also during a drag sequence
-    //(so during a drag sequence both the handleDragEvent function and this function are called).
+    // Function handling "move" events.
+    // This function is called on "move" events, also during a drag sequence
+    // (so during a drag sequence both the handleDragEvent function and this function are called).
     function handleMoveEvent(evt) {
       if (this.cursor_) {
         var map = evt.map;
@@ -119,8 +118,8 @@ export class PubliYourPlaceVariableService {
         }
       }
     }
-    //Function handling "up" events.
-    //If the function returns false then the current drag sequence is stopped.
+    // Function handling "up" events.
+    // If the function returns false then the current drag sequence is stopped.
     function handleUpEvent() {
       this.coordinate_ = null;
       this.feature_ = null;
@@ -128,7 +127,7 @@ export class PubliYourPlaceVariableService {
     }
     this.mapservice.map.addInteraction(new Drag());
     const iconFeature = new Feature({
-      geometry: new Point([long, lat])
+      geometry: new Point([long, lat]),
     });
     this.layerSource.addFeature(iconFeature);
     this.mapservice.map.getView().setZoom(zoom);
@@ -152,14 +151,19 @@ export class PubliYourPlaceVariableService {
     });
   }
 
-  CreatAddresFromPoint(inuptID:string){
+  CreatAddresFromPoint(inuptID: string, long, lat) {
+    if (lat === undefined || long === undefined) {
+      const Center = this.mapservice.map.getView().getCenter();
+      long = Center[0];
+      lat = Center[1];
+    }
     const input = document.getElementById(inuptID) as HTMLInputElement;
     // get map center and zoom to show point on it
-    const Center = this.mapservice.map.getView().getCenter();
+
     const Zoom = this.mapservice.map.getView().getZoom();
     // ----for first click before move point,add point in center map ----
-    this.addpoint(Center[0], Center[1], Zoom);
-    input.value = Center[0].toFixed(5) + ' , ' + Center[1].toFixed(5);
+    this.addpoint(long, lat, Zoom);
+    input.value = long.toFixed(0) + ' , ' + lat.toFixed(0);
     // ----after move point ----
     // get point source and point coordinate
     var source = this.maplayer.getSource();
@@ -175,7 +179,7 @@ export class PubliYourPlaceVariableService {
       geometry.on('change', evt => {
         const geometry_coords: Array<Number> = geometry.getFirstCoordinate();
         // assign them to two input value
-        input.value = geometry_coords[0].toFixed(5) + ' , ' + geometry_coords[1].toFixed(5);
+        input.value = geometry_coords[0].toFixed(0) + ' , ' + geometry_coords[1].toFixed(0);
       });
     }
   }

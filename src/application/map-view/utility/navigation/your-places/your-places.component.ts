@@ -46,8 +46,8 @@ export class YourPlacesComponent implements OnInit {
     this.publicVarYourPlace.closePlace();
     this.publicVarYourPlace.isOpenHome = true;
     this.publicVarYourPlace.isOpenWork = true;
-    // this.favoritHome.openHome();
-    // this.favoritWork.openWork();
+    this.favoritHome.openHome();
+    this.favoritWork.openWork();
   }
 
   closeHome() {

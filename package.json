@@ -23,6 +23,7 @@
     "core-js": "^2.6.9",
     "hammerjs": "^2.0.8",
     "ngx-device-detector": "^1.3.9",
+    "ngx-ui-loader": "^7.2.2",
     "ol": "^5.3.3",
     "point-in-polygon": "^1.0.1",
     "rxjs": "~6.3.3",
