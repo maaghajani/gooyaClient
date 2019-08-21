@@ -4,7 +4,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import Map from 'ol/Map';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
-// import proj from 'ol/proj';
+// import proj from 'ol/proj'; //extra chagnes hossein98.05.30
 // import extent from 'ol/extent';
 import WMTS from 'ol/source/WMTS';
 import optionsFromCapabilities from 'ol/source/WMTS';
@@ -15,6 +15,12 @@ import ImageWMS from 'ol/source/ImageWMS';
 @Injectable()
 export class PublicVarService {
   constructor() {}
+
+//1398.05.30-hossein changes
+//
+//
+//************************ */
+
 
   // ---- for animation ----
   public isOpenLogin = false;
