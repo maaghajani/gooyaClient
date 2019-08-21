@@ -2,7 +2,6 @@ import { state, style, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
-// ----Ol ==> map view for set view----
 import View from 'ol/View';
 import { PublicVarService } from 'src/application/shared/services/publicVar.service';
 import { MapService } from '../../shared/services/map.service';
