@@ -112,9 +112,6 @@ export class BaseMapComponent implements OnInit, DoCheck {
       this.setFeedbackPosition();
     });
     this.rightControlePosition();
-    console.log('resZomm: ' + this.mapservice.map.getView().getZoom())
-
-
   }
 
   // ---- ol function ----

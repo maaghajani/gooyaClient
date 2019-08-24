@@ -329,7 +329,8 @@ export class DirectionComponent implements OnInit {
         .then(
           (routResult: any) => {
             console.log(routResult);
-            routResult.forEach(element => {
+            console.log(routResult.nodes);
+            (routResult.nodes).forEach(element => {
               this.geojsonObjects.features[0].geometry.coordinates.push(element.coordinates);
             });
           },
