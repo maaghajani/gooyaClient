@@ -12,14 +12,15 @@ import WMTSTileGrid from 'ol/tilegrid/WMTS';
 // import BingMaps from 'ol/source/BingMaps.js';
 import { Image as ImageLayer, Tile as TileLayer } from 'ol/layer.js';
 import ImageWMS from 'ol/source/ImageWMS';
+import OSM from 'ol/source/OSM';
 @Injectable()
 export class PublicVarService {
-  constructor() {}
+  constructor() { }
 
-//1398.05.30-hossein changes
-//
-//
-//************************ */
+  //1398.05.30-hossein changes
+  //
+  //
+  //************************ */
 
 
   // ---- for animation ----
@@ -110,7 +111,7 @@ export class PublicVarService {
       params: {
         Layers: [
           // 'Kheizaran:POI',
-        'Kheizaran:PROVINCE_POINT' ],
+          'Kheizaran:PROVINCE_POINT'],
         Tiled: true,
       },
       serverType: 'geoserver',
@@ -136,6 +137,10 @@ export class PublicVarService {
     }),
   });
 
+  OSMLayer = new TileLayer({
+    source: new OSM(),
+    zIndex: 0
+  });
 
   // ----google satelite----
   SatelliteLayer = new TileLayer({
@@ -160,7 +165,7 @@ export class PublicVarService {
   terrianLayer = new TileLayer({
     opacity: 0.3,
     visible: false,
-
+    zIndex: 2,
     source: new XYZ({
       // attributions: 'GooyaMap © ',
       url: '	http://mt0.google.com/vt/lyrs=t&hl=en&x={x}&y={y}&z={z}',
@@ -176,6 +181,7 @@ export class PublicVarService {
       url: 'http://89.32.249.124:3000/api/Map/Tile/{z}/{y}/{x}',
       // url: 'https://localhost:44309/api/Map/Tile/{z}/{y}/{x}'
     }),
+    zIndex: 1
   });
 
   // WMTSLayer = new TileLayer({
@@ -206,7 +212,7 @@ export class PublicVarService {
     client.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     client.setRequestHeader('Access-Control-Allow-Origin', '*');
 
-    client.onload = function() {
+    client.onload = function () {
       const arrayBufferView = new Uint8Array(this.response);
       const blob = new Blob([arrayBufferView], { type: 'image/png' });
       const urlCreator = window.URL; // || window.webkitURL;

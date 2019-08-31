@@ -1,0 +1,15 @@
+<div class="search_result" #searchResult id="search-result">
+  <div class="tab">
+    <input id="streetTabRadio" type="radio" name="TabRadio" checked (click)="showResult()"/>
+    <label for="streetTabRadio" class="streetTab">نتایج جستجو خیابان</label>
+    <hr/>
+    <input id="pointTabRadio" type="radio" name="TabRadio"  (click)="showResult()"/>
+    <label for="pointTabRadio" class="pointTab">نتایج جستجو نقاط مهم</label>
+  </div>
+  <div class="result" *ngFor="let item of resultTotal">
+    <li>
+      <p>{{item.name}} , {{item.suburbName}}</p>
+    </li>
+
+  </div>
+</div>

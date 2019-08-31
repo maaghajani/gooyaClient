@@ -66,7 +66,8 @@ export class DirectionComponent implements OnInit {
       },
     ],
   };
-
+  timeRout;
+  distRout;
   constructor(
     public mapservice: MapService,
     public publicVar: PublicVarService,
@@ -329,7 +330,8 @@ export class DirectionComponent implements OnInit {
         .then(
           (routResult: any) => {
             console.log(routResult);
-            console.log(routResult.nodes);
+            this.distRout = routResult.distance;
+            this.timeRout = routResult.time;
             (routResult.nodes).forEach(element => {
               this.geojsonObjects.features[0].geometry.coordinates.push(element.coordinates);
             });
@@ -440,7 +442,7 @@ export class DirectionComponent implements OnInit {
       console.log('mid ' + mid )
 
       const texts = {
-        text: '200متر' + '\n' + ' 1 ساعت و 20 دقیقه',
+        text: this.distRout + '\n' + this.timeRout,
         textAlign: 'center',
         textBaseline: 'middle',
         // rotation: 0.785398164,
@@ -488,7 +490,9 @@ export class DirectionComponent implements OnInit {
         if (resolution > maxResolution) {
           texts.text = '';
         } else {
-          texts.text = '200متر' + '\n' + ' 1 ساعت و 20 دقیقه';
+
+          ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  must correct
+          texts.text = this.distRout + '\n' + this.timeRout;
         }
         styles.Point = new Style({ text: new Text(texts) });
       });

@@ -8,7 +8,7 @@ import { createStringXY } from 'ol/coordinate.js';
 @Component({
   selector: 'app-mouse-position',
   templateUrl: './mouse-position.component.html',
-  styleUrls: ['./mouse-position.component.scss']
+  styleUrls: ['./mouse-position.component.scss'],
 })
 export class MousePositionComponent implements OnInit, DoCheck {
   ismetric = false;
@@ -19,8 +19,8 @@ export class MousePositionComponent implements OnInit, DoCheck {
     this.changeMousePosProject();
   }
   ngDoCheck(): void {
-    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
-    //Add 'implements DoCheck' to the class.
+    // Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    // Add 'implements DoCheck' to the class.
     this.changeMousePositionFormat();
   }
   setMousePosition(numberStringX: number, projects: string) {
@@ -29,7 +29,7 @@ export class MousePositionComponent implements OnInit, DoCheck {
         coordinateFormat: createStringXY(numberStringX),
         projection: projects,
         target: document.getElementById('mouse-position'),
-        undefinedHTML: 'نامشخص'
+        undefinedHTML: 'نامشخص',
       })
     );
   }
@@ -41,35 +41,34 @@ export class MousePositionComponent implements OnInit, DoCheck {
     const arrayMouse = mousePosContent.split(',');
     const long = parseFloat(arrayMouse[0]);
     const lat = parseFloat(arrayMouse[1]);
-    let longFormat:string=null
-    let latFormat:string=null
+    let longFormat: string = null;
+    let latFormat: string = null;
     if (long > 0) {
-      longFormat=long + 'E' 
-    }else if (long < 0){
-      longFormat=long + 'W' 
-    }else{
-      longFormat=long.toString()
+      longFormat = long + 'E';
+    } else if (long < 0) {
+      longFormat = long + 'W';
+    } else {
+      longFormat = long.toString();
     }
     if (lat > 0) {
-      latFormat=lat + 'N' 
-    }else if (lat < 0){
-      latFormat=lat + 'S' 
-    }else{
-      latFormat=lat.toString()
+      latFormat = lat + 'N';
+    } else if (lat < 0) {
+      latFormat = lat + 'S';
+    } else {
+      latFormat = lat.toString();
     }
-    
-    const moseFormat =longFormat+ ' , ' +latFormat;
-    if (mousePosContent !== 'نامشخص' && (arrayMouse[0] != undefined && arrayMouse[1] != undefined)) {
+
+    const moseFormat = longFormat + ' , ' + latFormat;
+    if (mousePosContent !== 'نامشخص' && (arrayMouse[0] !== undefined && arrayMouse[1] !== undefined)) {
       if (!checkbox.checked) {
-      document.getElementById('mouse-position-fromat').innerText = moseFormat;
-      }else{
-        document.getElementById('mouse-position-fromat').innerText =mousePosContent
+        document.getElementById('mouse-position-fromat').innerText = moseFormat;
+      } else {
+        document.getElementById('mouse-position-fromat').innerText = mousePosContent;
       }
     } else {
       document.getElementById('mouse-position-fromat').innerText = 'نامشخص';
     }
-    
-}
+  }
   changeMousePosProject() {
     const checkbox = document.getElementById('checkboxMouseposition') as HTMLInputElement;
     const control = this.mapservice.map.getControls();
@@ -78,7 +77,7 @@ export class MousePositionComponent implements OnInit, DoCheck {
       this.mapservice.map.getControls().forEach(element => {
         const elemKey = element.getKeys();
         elemKey.forEach(elm => {
-          if (elm == 'projection') {
+          if (elm === 'projection') {
             // console.log('loopremove');
             this.mapservice.map.removeControl(element);
             if (checkbox.checked) {
@@ -92,4 +91,3 @@ export class MousePositionComponent implements OnInit, DoCheck {
     });
   }
 }
-
