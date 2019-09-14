@@ -12,7 +12,6 @@ import { MoreSearchComponent } from '../utility/more-search/more-search.componen
 import { PoiComponent } from '../utility/more-search/poi/poi.component';
 import { StreetComponent } from '../utility/more-search/street/street.component';
 import { YourPlacesComponent } from './../utility/navigation/your-places/your-places.component';
-import Control from 'ol/control/Control';
 @Component({
   selector: 'app-base-map',
   templateUrl: './base-map.component.html',
@@ -117,10 +116,10 @@ export class BaseMapComponent implements OnInit, DoCheck {
 
   BBOX() {
     if (window.location.hash !== '') {
-      console.log('hash');
-      // try to restore center, zoom-level and rotation from the URL
-      const hash = window.location.hash.replace('#map=', '');
-      const parts = hash.split('/');
+      // try to restore center, zoom-level from the URL
+      console.log(window.location.hash);
+      const hash = window.location.hash.replace('@', '');
+      const parts = hash.split(',');
       if (parts.length === 4) {
         this.mapservice.zoom = parseInt(parts[0], 10);
         this.mapservice.centerX = parseFloat(parts[1]);
@@ -138,29 +137,25 @@ export class BaseMapComponent implements OnInit, DoCheck {
 
       const center = view.getCenter();
       const hash =
-        '@' +
-        Math.round(center[0] * 100) / 100 +
-        ',' +
-        Math.round(center[1] * 100) / 100 +
-        ',' +
-        view.getZoom() +
-        'Z'
+        '#' + Math.round(center[0] * 100) / 100 + ',' + Math.round(center[1] * 100) / 100 + ',' + view.getZoom() + 'Z';
+
+      console.log(hash);
       const states = {
         zoom: view.getZoom(),
         center: view.getCenter(),
       };
       window.history.pushState(states, 'map', hash);
-      console.log(states);
     };
 
     this.mapservice.map.on('moveend', updatePermalink);
 
     // restore the view state when navigating through the history, see
     // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onpopstate
-    window.addEventListener('popstate', function(event) {
+    window.addEventListener('popstate', event => {
       if (event.state === null) {
         return;
       }
+      console.log('potstate');
       view.setCenter(event.state.center);
       view.setZoom(event.state.zoom);
       shouldUpdate = false;
