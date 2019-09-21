@@ -53,8 +53,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
       //  get token response  //
       this.httpClient
         .post<GetTokenResponse>(
-          'http://89.32.249.124:3000/api/Token/Create',
-
+          this.publicVar.baseUrl + ':3000/api/Token/Create',
           {
             emailAddress: 'gooya@gmail.com',
             plainPassword: 'gooya',
@@ -62,7 +61,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
         )
         .subscribe(data => {
           sessionStorage.setItem('token', data.token);
-          console.log(data);
+          //console.log(data);
         });
 
       // ---- first we get ip from https://api.ipify.org?format=json ----
@@ -139,7 +138,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
       const hash =
         '#' + Math.round(center[0] * 100) / 100 + ',' + Math.round(center[1] * 100) / 100 + ',' + view.getZoom() + 'Z';
 
-      console.log(hash);
+      //console.log(hash);
       const states = {
         zoom: view.getZoom(),
         center: view.getCenter(),
@@ -267,7 +266,8 @@ export class BaseMapComponent implements OnInit, DoCheck {
       this.publicVar.isOpenIntersect ||
       this.publicVar.isOpenPoi ||
       this.publicVar.isOpenPlaces ||
-      this.publicVar.isOpenCoordinate
+      this.publicVar.isOpenCoordinate ||
+      this.publicVar.isOpenSearchResult
     ) {
       document.getElementById('right-controller').style.transform = 'translateX(-382px)';
       document.getElementById('right-controller').style.transition = 'all 0.5s ease-in-out';

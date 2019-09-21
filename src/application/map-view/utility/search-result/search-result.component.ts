@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SearchBoxComponent } from '../search-box/search-box.component';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SearchService } from './../search-box/search.service';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { transform } from 'ol/proj.js';
+import { MapService } from 'src/application/shared/services/map.service';
+import { PublicVarService } from 'src/application/shared/services/publicVar.service';
 
 @Component({
   selector: 'app-search-result',
@@ -10,7 +11,7 @@ import { SearchService } from './../search-box/search.service';
 })
 export class SearchResultComponent implements OnInit {
   resultTotal: Array<object> = [];
-  searchResult = [
+  searchResults = [
     {
       id: '4ecff356-8bf7-4eb8-80f7-12924145760a',
       name: 'علی فراش',
@@ -246,30 +247,38 @@ export class SearchResultComponent implements OnInit {
       type: 'STREET',
     },
   ];
-  constructor(private searchService: SearchService, private httpClient: HttpClient) {}
-  ngOnInit() {
-    this.showResult();
-  }
+  constructor(
+    public publicVar: PublicVarService,
+    private mapservice: MapService) {}
+  ngOnInit() {}
 
-  openSearchResult() {
-    console.log(this.searchService.SearchUrl);
-    if (this.searchService.SearchUrl) {
-      const url = this.searchService.SearchUrl;
-      const httpOption = { headers: new HttpHeaders({}) };
-      httpOption.headers.append('Access-Control-Allow-Origin', '*');
-      httpOption.headers.append('Access-Control-Allow-Credentials', 'true');
-      httpOption.headers.append('Access-Control-Expose-Headers', 'FooBar');
-      httpOption.headers.append('Content-Type', 'application/json; charset=utf-8');
-      this.httpClient
+  openSearchResult(url) {
+    //console.log(this.searchService.SearchUrl);
+    if (url) {
+      /*this.httpClient
         .get(url, httpOption)
         .toPromise()
         .then(searchResultResponse => {
           // this.searchResult = searchResultResponse;
-        });
+        });*/
+        document.getElementById('search-result').style.display = 'block';
+        document.getElementById('utility').style.zIndex = '1';
+        document.getElementById('utility').style.position = 'absolute';
+        document.getElementById('utility').style.boxShadow = 'none';
+        document.getElementById('dirct-icon').style.display = 'none';
 
-      document.getElementById('search-result').style.display = 'block';
-      document.getElementById('search-result').style.height = '100vh';
-    }
+        (document.getElementById('streetTabRadio') as HTMLInputElement).checked = true;
+
+        this.publicVar.isOpenSearchResult = true;
+      }
+  }
+
+  closeSearch() {
+    document.getElementById('search-result').style.display = 'none';
+    document.getElementById('utility').style.zIndex = '0';
+    document.getElementById('utility').style.position = 'static';
+    document.getElementById('utility').style.boxShadow = 'rgba(17, 17, 17, 0.5) 0 5px 10px';
+    document.getElementById('dirct-icon').style.display = 'flex';
   }
 
   showResult() {
@@ -277,7 +286,7 @@ export class SearchResultComponent implements OnInit {
     const resultStreet: Array<object> = [];
     const resultPoi: Array<object> = [];
 
-    this.searchResult.forEach(resultRow => {
+    this.searchResults.forEach(resultRow => {
       if (resultRow.type === 'STREET') {
         resultStreet.push(resultRow);
       } else {
@@ -289,5 +298,27 @@ export class SearchResultComponent implements OnInit {
     } else {
       this.resultTotal = resultPoi;
     }
+    console.log(this.resultTotal);
+  }
+
+  GotoLocation(i) {
+    let x;
+    let y;
+    const resultTotalI: object = this.resultTotal[i];
+    for (const key in resultTotalI) {
+      if (key === 'coordinateDocument') {
+        const coord = resultTotalI[key];
+        for (const xy in coord) {
+          if (xy === 'lat') {
+            y = coord[xy];
+          } else {
+            x = coord[xy];
+          }
+        }
+      }
+    }
+    const center = transform([x, y], 'EPSG:4326', this.mapservice.project);
+    this.mapservice.map.getView().setCenter(center);
+    this.mapservice.map.getView().setZoom(15);
   }
 }

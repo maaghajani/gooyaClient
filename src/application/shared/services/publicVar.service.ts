@@ -22,7 +22,7 @@ export class PublicVarService {
   //
   //************************ */
 
-
+  public baseUrl = 'http://89.32.249.124';
   // ---- for animation ----
   public isOpenLogin = false;
   public isOpenPopupLocation = true;
@@ -36,6 +36,7 @@ export class PublicVarService {
   public isOpenNavigation = false;
   public isOpenPlaces = false;
   public isOpenAboutUs = false;
+  public isOpenSearchResult = false;
   public time = 500;
   public timeUtility = 1000;
   // ---- for animation ----
@@ -91,7 +92,7 @@ export class PublicVarService {
 
   MapLayer = new TileLayer({
     source: new TileWMS({
-      url: 'http://89.32.249.124:3000/api/Map/wms',
+      url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
           'Kheizaran:InterState',
@@ -107,7 +108,7 @@ export class PublicVarService {
   });
   poiLayer = new TileLayer({
     source: new TileWMS({
-      url: 'http://89.32.249.124:3000/api/Map/wms',
+      url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
           // 'Kheizaran:POI',
@@ -120,7 +121,7 @@ export class PublicVarService {
   });
   AreaLAyer = new TileLayer({
     source: new TileWMS({
-      url: 'http://89.32.249.124:3000/api/Map/wms',
+      url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
           // 'Kheizaran:PROVINCE',
@@ -178,7 +179,7 @@ export class PublicVarService {
     opacity: 1,
     source: new XYZ({
       attributions: 'GooyaMap © ',
-      url: 'http://89.32.249.124:3000/api/Map/Tile/{z}/{y}/{x}',
+      url: this.baseUrl + ':3000/api/Map/Tile/{z}/{y}/{x}',
       // url: 'https://localhost:44309/api/Map/Tile/{z}/{y}/{x}'
     }),
     zIndex: 1

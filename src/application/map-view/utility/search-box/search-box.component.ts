@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MapService } from './../../../shared/services/map.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
 import { transform } from 'ol/proj.js';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MapService } from './../../../shared/services/map.service';
 import { SearchResultComponent } from './../search-result/search-result.component';
-import { SearchService } from './search.service';
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
@@ -37,7 +35,6 @@ export class SearchBoxComponent implements OnInit {
   constructor(
     private mapservice: MapService,
     public searchResult: SearchResultComponent,
-    private searchService: SearchService
   ) {}
 
   ngOnInit() {}
@@ -48,7 +45,8 @@ export class SearchBoxComponent implements OnInit {
       const mapCenterTransform: Array<number> = transform(mapCenter, this.mapservice.project, 'EPSG:4326');
       const loction = mapCenterTransform.join(',');
       const url = 'http://place.frdid.com/api/place/nearbysearch/?query=' + sreachTxt.value + '&location=' + loction;
-      this.searchService.SearchUrl = url;
+      this.searchResult.openSearchResult(url);
+      this.searchResult.showResult();
     }
   }
 }

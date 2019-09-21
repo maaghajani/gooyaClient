@@ -229,20 +229,20 @@ export class DirectionComponent implements OnInit {
       this.publicVar.isDirectionInIran
     ) {
       // for remove previous rout if exist
-      this.removeRoutLayer('routing');
-      this.removeRoutLayer('pointLabel');
       // first set coord then set name
       if (document.activeElement.id === 'start-point') {
         this.startPoint.value = this.StringXY;
       } else {
         this.endPoint.value = this.StringXY;
       }
-      const url = 'http://89.32.249.124:1398/api/map/GetMapLIDByPoint?x=' + geoLocation[0] + '&y=' + geoLocation[1];
+      const url = this.publicVar.baseUrl+ ':1398/api/map/GetMapLIDByPoint?x=' + geoLocation[0] + '&y=' + geoLocation[1];
       console.log(url)
       this.httpClient
         .get(url)
         .toPromise()
         .then(resultName => {
+          console.log('result api')
+          console.log(resultName)
           // khoroji irad dasht bayad 2bareh tabdil b json mishod
           const responseJson = JSON.parse(resultName.toString());
           const lenResult = Object.keys(responseJson).length;
@@ -309,12 +309,15 @@ export class DirectionComponent implements OnInit {
     result dorost darad agar dasht ebteda ba variable haye nmojod body api routing ra dorost kardeh
     sepas b api GetRoute yek request miferstim nokteh mohem responseType: 'text' as 'json' va garna erorr migirim
     */
+    console.log('searchrout');
     console.log(this.geojsonObjects);
     const startPoint = (document.getElementById('start-point') as HTMLInputElement).value;
     const endPoint = (document.getElementById('end-point') as HTMLInputElement).value;
-    const routUrl = 'http://89.32.249.124:3000/api/Map/GetRoute';
+    const routUrl = this.publicVar.baseUrl+ ':3000/api/Map/GetRoute';
     const httpOption = { headers: new HttpHeaders({}) };
     httpOption.headers.append('Content-Type', 'application/json');
+    console.log(this.publicVar.startPointLocation);
+    console.log(this.publicVar.endPointLocation);
     if (this.publicVar.startPointLocation && this.publicVar.endPointLocation && startPoint !== '' && endPoint !== '') {
       const routBody = {
         endId: this.publicVar.endLID,
@@ -324,6 +327,7 @@ export class DirectionComponent implements OnInit {
         toLat: this.float2Int(this.publicVar.endPointLocation[1]),
         toLng: this.float2Int(this.publicVar.endPointLocation[0]),
       };
+      console.log('if');
       this.httpClient
         .post(routUrl, routBody, httpOption)
         .toPromise()
