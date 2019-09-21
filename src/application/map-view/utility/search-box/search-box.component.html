@@ -4,11 +4,11 @@
     placeholder="جستجوی Gooya Map"
     (click)="openMore()"
     #sreachTxt
-    (keyup.enter)="Search(sreachTxt)"
+    (keyup.enter)="Search(sreachTxt);this.searchResult.showResult()"
   />
 
   <div class="search-icon">
-    <button appTooltips="جستجو" placement="bottom" delay="300" (click)="Search(sreachTxt)">
+    <button appTooltips="جستجو" placement="bottom" delay="300" (click)="Search(sreachTxt);this.searchResult.showResult()">
       <svg
         height="12pt"
         viewBox="0 0 448 448"

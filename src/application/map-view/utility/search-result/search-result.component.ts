@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { transform } from 'ol/proj.js';
 import { MapService } from 'src/application/shared/services/map.service';
@@ -10,7 +10,7 @@ import { PublicVarService } from 'src/application/shared/services/publicVar.serv
   styleUrls: ['./search-result.component.scss'],
 })
 export class SearchResultComponent implements OnInit {
-  resultTotal: Array<object> = [];
+  resultTotal;
   searchResults = [
     {
       id: '4ecff356-8bf7-4eb8-80f7-12924145760a',
@@ -247,31 +247,27 @@ export class SearchResultComponent implements OnInit {
       type: 'STREET',
     },
   ];
-  constructor(
-    public publicVar: PublicVarService,
-    private mapservice: MapService) {}
+  constructor(private httpClient: HttpClient, public publicVar: PublicVarService, private mapservice: MapService) {}
   ngOnInit() {}
 
-  openSearchResult(url) {
-    //console.log(this.searchService.SearchUrl);
-    if (url) {
-      /*this.httpClient
-        .get(url, httpOption)
-        .toPromise()
-        .then(searchResultResponse => {
-          // this.searchResult = searchResultResponse;
-        });*/
-        document.getElementById('search-result').style.display = 'block';
-        document.getElementById('utility').style.zIndex = '1';
-        document.getElementById('utility').style.position = 'absolute';
-        document.getElementById('utility').style.boxShadow = 'none';
-        document.getElementById('dirct-icon').style.display = 'none';
+  openSearchResult(URL) {
+      // this.httpClient
+      //   .get(url)
+      //   .toPromise()
+      //   .then(searchResultResponse => {
+      //     // this.searchResult = searchResultResponse;
+      //     console.log(searchResultResponse)
+      //   });
 
-        (document.getElementById('streetTabRadio') as HTMLInputElement).checked = true;
+      (document.getElementById('streetTabRadio') as HTMLInputElement).checked = true;
+      document.getElementById('search-result').style.display = 'block';
+      document.getElementById('utility').style.zIndex = '1';
+      document.getElementById('utility').style.position = 'absolute';
+      document.getElementById('utility').style.boxShadow = 'none';
+      document.getElementById('dirct-icon').style.display = 'none';
+      this.publicVar.isOpenSearchResult = true;
 
-        this.publicVar.isOpenSearchResult = true;
-      }
-  }
+}
 
   closeSearch() {
     document.getElementById('search-result').style.display = 'none';
@@ -298,7 +294,7 @@ export class SearchResultComponent implements OnInit {
     } else {
       this.resultTotal = resultPoi;
     }
-    console.log(this.resultTotal);
+    //console.log(this.resultTotal);
   }
 
   GotoLocation(i) {
@@ -321,4 +317,7 @@ export class SearchResultComponent implements OnInit {
     this.mapservice.map.getView().setCenter(center);
     this.mapservice.map.getView().setZoom(15);
   }
+
+//*ngFor="let item of resultTotal ; let i = index"
 }
+

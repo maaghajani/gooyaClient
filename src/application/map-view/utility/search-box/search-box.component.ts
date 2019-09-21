@@ -46,7 +46,6 @@ export class SearchBoxComponent implements OnInit {
       const loction = mapCenterTransform.join(',');
       const url = 'http://place.frdid.com/api/place/nearbysearch/?query=' + sreachTxt.value + '&location=' + loction;
       this.searchResult.openSearchResult(url);
-      this.searchResult.showResult();
     }
   }
 }
