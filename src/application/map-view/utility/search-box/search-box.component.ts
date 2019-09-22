@@ -1,38 +1,51 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { trigger,state,style,transition,animate } from '@angular/animations';
-
+import { transform } from 'ol/proj.js';
+import { MapService } from './../../../shared/services/map.service';
+import { SearchResultComponent } from './../search-result/search-result.component';
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss'],
   animations: [
     trigger('moreState', [
-      state('inactive', style({
-        transform: 'translateY(0)' // X (0)
-      })),
-      state('active', style({
-        transform: 'translateY(100%)' // X (100px)
-      })),
-      transition('* => active', [
-        animate('0.5s')
-      ])
-    ])
-  ]
+      state(
+        'inactive',
+        style({
+          transform: 'translateY(0)', // X (0)
+        })
+      ),
+      state(
+        'active',
+        style({
+          transform: 'translateY(100%)', // X (100px)
+        })
+      ),
+      transition('* => active', [animate('0.5s')]),
+    ]),
+  ],
 })
 export class SearchBoxComponent implements OnInit {
+  searchUrl;
   currentState = 'inactive';
+
   openMore(): void {
-
-      this.currentState = this.currentState === 'inactive' ? 'active' : 'inactive';
-    // document.getElementById('more').style.display = 'block';
+    this.currentState = this.currentState === 'inactive' ? 'active' : 'inactive';
   }
-  constructor() { }
+  constructor(
+    private mapservice: MapService,
+    public searchResult: SearchResultComponent,
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  Search(sreachTxt: HTMLInputElement) {
+    if (sreachTxt.value.length > 0) {
+      const mapCenter = this.mapservice.map.getView().getCenter();
+      const mapCenterTransform: Array<number> = transform(mapCenter, this.mapservice.project, 'EPSG:4326');
+      const loction = mapCenterTransform.join(',');
+      const url = 'http://place.frdid.com/api/place/nearbysearch/?query=' + sreachTxt.value + '&location=' + loction;
+      this.searchResult.openSearchResult(url);
+    }
   }
-
-
-
 }
-// export class TooltipOverviewExample {}
-export class TooltipCustomClassExample {}

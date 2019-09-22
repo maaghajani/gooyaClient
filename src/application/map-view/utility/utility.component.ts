@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
       <app-direction class="col-1"></app-direction>
     </div>
     <app-more-search id="more-search"></app-more-search>
+    <app-search-result></app-search-result>
   `,
   styleUrls: ['./utility.component.scss']
 })

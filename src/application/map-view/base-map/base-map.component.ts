@@ -12,7 +12,6 @@ import { MoreSearchComponent } from '../utility/more-search/more-search.componen
 import { PoiComponent } from '../utility/more-search/poi/poi.component';
 import { StreetComponent } from '../utility/more-search/street/street.component';
 import { YourPlacesComponent } from './../utility/navigation/your-places/your-places.component';
-
 @Component({
   selector: 'app-base-map',
   templateUrl: './base-map.component.html',
@@ -22,17 +21,17 @@ import { YourPlacesComponent } from './../utility/navigation/your-places/your-pl
       state(
         'open',
         style({
-          animation: ' fade-in 1s cubic-bezier(0.39, 0.575, 0.565, 1) both'
+          animation: ' fade-in 1s cubic-bezier(0.39, 0.575, 0.565, 1) both',
         })
       ),
       state(
         'close',
         style({
-          animation: ' fade-out 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both'
+          animation: ' fade-out 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both',
         })
-      )
-    ])
-  ]
+      ),
+    ]),
+  ],
 })
 export class BaseMapComponent implements OnInit, DoCheck {
   isPersian: boolean = true;
@@ -51,20 +50,19 @@ export class BaseMapComponent implements OnInit, DoCheck {
   ) {
     // ---- get client infomation like ip, os , ... ----
     window.addEventListener('DOMContentLoaded', e => {
-
       //  get token response  //
       this.httpClient
-        .post<GetTokenResponse>('http://89.32.249.124:3000/api/Token/Create',
-
+        .post<GetTokenResponse>(
+          this.publicVar.baseUrl + ':3000/api/Token/Create',
           {
             emailAddress: 'gooya@gmail.com',
-            plainPassword: 'gooya'
+            plainPassword: 'gooya',
           }
-        ).subscribe(data => {
-          sessionStorage.setItem("token", data.token);
-          console.log(data)
-        }
-        );
+        )
+        .subscribe(data => {
+          sessionStorage.setItem('token', data.token);
+          console.log(data);
+        });
 
       // ---- first we get ip from https://api.ipify.org?format=json ----
       this.httpClient
@@ -100,11 +98,12 @@ export class BaseMapComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.setTarget();
     this.setView();
-    // this.addXYZTile();
+    this.addXYZTile();
     // this.addWMTSLayer();
-    this.addWMS();
+     //this.addWMS();
     this.moveCursor();
     this.zoomCursor();
+    this.BBOX();
   }
 
   ngDoCheck() {
@@ -112,9 +111,54 @@ export class BaseMapComponent implements OnInit, DoCheck {
       this.setFeedbackPosition();
     });
     this.rightControlePosition();
-    console.log('resZomm: ' + this.mapservice.map.getView().getZoom())
+  }
 
+  BBOX() {
+    if (window.location.hash !== '') {
+      // try to restore center, zoom-level from the URL
+      console.log(window.location.hash);
+      const hash = window.location.hash.replace('@', '');
+      const parts = hash.split(',');
+      if (parts.length === 4) {
+        this.mapservice.zoom = parseInt(parts[0], 10);
+        this.mapservice.centerX = parseFloat(parts[1]);
+        this.mapservice.centerY = parseFloat(parts[2]);
+      }
+    }
+    let shouldUpdate = true;
+    const view = this.mapservice.map.getView();
+    const updatePermalink = () => {
+      if (!shouldUpdate) {
+        // do not update the URL when the view was changed in the 'popstate' handler
+        shouldUpdate = true;
+        return;
+      }
 
+      const center = view.getCenter();
+      const hash =
+        '#' + Math.round(center[0] * 100) / 100 + ',' + Math.round(center[1] * 100) / 100 + ',' + view.getZoom() + 'Z';
+
+      //console.log(hash);
+      const states = {
+        zoom: view.getZoom(),
+        center: view.getCenter(),
+      };
+      window.history.pushState(states, 'map', hash);
+    };
+
+    this.mapservice.map.on('moveend', updatePermalink);
+
+    // restore the view state when navigating through the history, see
+    // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onpopstate
+    window.addEventListener('popstate', event => {
+      if (event.state === null) {
+        return;
+      }
+      console.log('potstate');
+      view.setCenter(event.state.center);
+      view.setZoom(event.state.zoom);
+      shouldUpdate = false;
+    });
   }
 
   // ---- ol function ----
@@ -122,7 +166,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
     const view = new View({
       projection: this.mapservice.project,
       center: [this.mapservice.centerX, this.mapservice.centerY],
-      zoom: this.mapservice.zoom
+      zoom: this.mapservice.zoom,
       // minZoom: this.mapservice.minZoom,
       // maxZoom: this.mapservice.maxZoom
     });
@@ -144,15 +188,13 @@ export class BaseMapComponent implements OnInit, DoCheck {
   // ----Add tile static layer
 
   addXYZTile() {
+    this.mapservice.map.addLayer(this.publicVar.OSMLayer);
     this.mapservice.map.addLayer(this.publicVar.xyzLayer);
   }
 
-
-
   addWMTSLayer() {
-     // this.mapservice.map.addLayer(this.publicVar.WMTSLayer);
+    // this.mapservice.map.addLayer(this.publicVar.WMTSLayer);
   }
-
 
   // ---- change mouse cursor when move on map ----
   moveCursor() {
@@ -224,7 +266,8 @@ export class BaseMapComponent implements OnInit, DoCheck {
       this.publicVar.isOpenIntersect ||
       this.publicVar.isOpenPoi ||
       this.publicVar.isOpenPlaces ||
-      this.publicVar.isOpenCoordinate
+      this.publicVar.isOpenCoordinate ||
+      this.publicVar.isOpenSearchResult
     ) {
       document.getElementById('right-controller').style.transform = 'translateX(-382px)';
       document.getElementById('right-controller').style.transition = 'all 0.5s ease-in-out';
@@ -244,7 +287,6 @@ export class BaseMapComponent implements OnInit, DoCheck {
       document.getElementsByTagName('body').item(0).style.direction = 'rtl';
     }
   }
-
 
   // end
 }

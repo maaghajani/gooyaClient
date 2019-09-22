@@ -57,6 +57,7 @@ import { FavoritHomeComponent } from './map-view/utility/navigation/your-places/
 import { FavoritWorkComponent } from './map-view/utility/navigation/your-places/favorit-work/favorit-work.component';
 // ----for get info user----
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { SearchResultComponent } from './map-view/utility/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
     AboutUsComponent,
     FavoritHomeComponent,
     FavoritWorkComponent,
+    SearchResultComponent,
   ],
   imports: [
     CommonModule,
@@ -113,7 +115,8 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule, // import NgxUiLoaderModule
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true }), // import NgxUiLoaderHttpModule. By default, it will show background loader.
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true  ,  exclude: ['http://place.frdid.com/api/place/nearbysearch/']}),
+    // import NgxUiLoaderHttpModule. By default, it will show background loader.
     // If you need to show foreground spinner, do as follow:
     // NgxUiLoaderHttpModule.forRoot({ showForeground: true })
   ],
@@ -162,6 +165,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
     AboutUsComponent,
     FavoritHomeComponent,
     FavoritWorkComponent,
+    SearchResultComponent,
   ],
 
 })

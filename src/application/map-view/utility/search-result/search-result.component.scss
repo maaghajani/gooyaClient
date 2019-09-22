@@ -1,0 +1,106 @@
+@import '../../../../scss/utility/utility.scss';
+.search_result {
+  @extend %Shadow-more;
+  display: none;
+  background-color: $color_light;
+  min-width: 380px;
+  height: 100vh;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  border-radius: 2px 2px 0 0;
+  -webkit-border-radius: 2px 2px 0 0;
+  -moz-border-radius: 2px 2px 0 0;
+  -ms-border-radius: 2px 2px 0 0;
+  -o-border-radius: 2px 2px 0 0;
+  transition: all 0.8s linear;
+  -webkit-transition: all 0.8s linear;
+  -moz-transition: all 0.8s linear;
+  -ms-transition: all 0.8s linear;
+  -o-transition: all 0.8s linear;
+  .base{
+    // height: 70px;
+    height: 11%;
+    width: 100%;
+    background-color: $color-light-blue;
+
+    .search-closer {
+      cursor: pointer;
+      svg {
+        height: 15px;
+        width: 15px;
+        fill: $color-dark;
+        margin-right: 333px;
+        margin-top: 27px;
+        z-index: 1;
+        position: absolute;
+      }
+    }
+  }
+
+.tab{
+  display: flex;
+  // height: 35px;
+  height: 6.5%;
+  background-color:$color-light-blue;
+  color: $color-light;
+  //margin-top: 90px;
+  align-items: center;
+  justify-content: space-between;
+  #streetTabRadio,#pointTabRadio{
+    display: none;
+    & + label{
+      // background-color: white;
+      background-color:$color-light-blue;
+      color: $color-light;
+    }
+    &:checked + label {
+      background-color:$color-light;
+      color:$color-light-blue;
+    }
+
+  }
+
+  .streetTab , .pointTab {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.all-result{
+  height: 83%;
+  overflow: scroll;
+  overflow-x: hidden;
+  // scrooolll
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: $color-light;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: lighten($color: $color-gray-svg, $amount: 30);
+    border-radius: 1px 0 0 1px;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  // scrooolll
+
+  .result{
+    padding: 4px 20px;
+    border-bottom: 1px solid rgba($color-gray-svg, 0.2);
+    li{
+      list-style: none;
+    }
+  }
+}
+
+}

@@ -25,7 +25,7 @@ export class LoginPageComponent implements OnInit {
 
     const userName = this.loginForm.value.userName;
     const password = this.loginForm.value.password;
-    const url = 'http://89.32.249.124:1398/api/user/getloaduser?username=' + userName + '&userpassword=' + password;
+    const url = this.publicVar.baseUrl + '1398/api/user/getloaduser?username=' + userName + '&userpassword=' + password;
     console.log(url);
 
     this.httpClient
