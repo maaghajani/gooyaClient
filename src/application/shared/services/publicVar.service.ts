@@ -4,24 +4,25 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import Map from 'ol/Map';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
-//import proj from 'ol/proj';
-//import extent from 'ol/extent';
+// import proj from 'ol/proj';
+// import extent from 'ol/extent';
 import WMTS from 'ol/source/WMTS';
 import optionsFromCapabilities from 'ol/source/WMTS';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 // import BingMaps from 'ol/source/BingMaps.js';
 import { Image as ImageLayer, Tile as TileLayer } from 'ol/layer.js';
 import ImageWMS from 'ol/source/ImageWMS';
+import OSM from 'ol/source/OSM';
 @Injectable()
 export class PublicVarService {
-  constructor() {}
+  constructor() { }
 
-//1398.05.30-hossein changes
-//
-//
-//************************ */
+  //1398.05.30-hossein changes
+  //
+  //
+  //************************ */
 
-
+  public baseUrl = 'http://89.32.249.124';
   // ---- for animation ----
   public isOpenLogin = false;
   public isOpenPopupLocation = true;
@@ -35,6 +36,7 @@ export class PublicVarService {
   public isOpenNavigation = false;
   public isOpenPlaces = false;
   public isOpenAboutUs = false;
+  public isOpenSearchResult = false;
   public time = 500;
   public timeUtility = 1000;
   // ---- for animation ----
@@ -82,15 +84,15 @@ export class PublicVarService {
 
   // ---- wmts params ----
   projLike: ol.ProjectionLike = 'EPSG:3857';
-  //projection: ol.proj.Projection = proj.get(this.projLike);
-  //projectionExtent: ol.Extent = this.projection.getExtent();
-  //size: number = extent.getWidth(this.projectionExtent) / 256;
-  //resolution: Array<number> = new Array(21).map((res, index) => this.size / Math.pow(2 , index ) );
+  // projection: ol.proj.Projection = proj.get(this.projLike);
+  // projectionExtent: ol.Extent = this.projection.getExtent();
+  // size: number = extent.getWidth(this.projectionExtent) / 256;
+  // resolution: Array<number> = new Array(21).map((res, index) => this.size / Math.pow(2 , index ) );
   matrixIds: Array<string> = new Array(21).map((mat, idx) => 'EPSG:3857:' + idx);
 
   MapLayer = new TileLayer({
     source: new TileWMS({
-      url: 'http://89.32.249.124:3000/api/Map/wms',
+      url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
           'Kheizaran:InterState',
@@ -106,11 +108,11 @@ export class PublicVarService {
   });
   poiLayer = new TileLayer({
     source: new TileWMS({
-      url: 'http://89.32.249.124:3000/api/Map/wms',
+      url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
           // 'Kheizaran:POI',
-        'Kheizaran:PROVINCE_POINT' ],
+          'Kheizaran:PROVINCE_POINT'],
         Tiled: true,
       },
       serverType: 'geoserver',
@@ -119,23 +121,29 @@ export class PublicVarService {
   });
   AreaLAyer = new TileLayer({
     source: new TileWMS({
-      url: 'http://89.32.249.124:3000/api/Map/wms',
+      url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
-          // 'Kheizaran:PROVINCE',
+          //'Kheizaran:PROVINCE',
           // 'Kheizaran:IRAN_BOARDER',
           // 'Kheizaran:GREEN_AREA',
           // 'Kheizaran:RIVER_LAKE',
           // 'Kheizaran:OCEANS',
           'Kheizaran:KCE_Layer'
+          //'Kheizaran:NETWORK',
         ],
         Tiled: true,
+       // style
       },
       serverType: 'geoserver',
       transition: 0,
     }),
   });
 
+  OSMLayer = new TileLayer({
+    source: new OSM(),
+    zIndex: 0
+  });
 
   // ----google satelite----
   SatelliteLayer = new TileLayer({
@@ -160,7 +168,7 @@ export class PublicVarService {
   terrianLayer = new TileLayer({
     opacity: 0.3,
     visible: false,
-
+    zIndex: 2,
     source: new XYZ({
       // attributions: 'GooyaMap © ',
       url: '	http://mt0.google.com/vt/lyrs=t&hl=en&x={x}&y={y}&z={z}',
@@ -173,9 +181,10 @@ export class PublicVarService {
     opacity: 1,
     source: new XYZ({
       attributions: 'GooyaMap © ',
-      url: 'http://89.32.249.124:3000/api/Map/Tile/{z}/{y}/{x}',
+      url: this.baseUrl + ':3000/api/Map/Tile/{z}/{y}/{x}',
       // url: 'https://localhost:44309/api/Map/Tile/{z}/{y}/{x}'
     }),
+    zIndex: 1
   });
 
   // WMTSLayer = new TileLayer({
@@ -206,7 +215,7 @@ export class PublicVarService {
     client.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     client.setRequestHeader('Access-Control-Allow-Origin', '*');
 
-    client.onload = function() {
+    client.onload = function () {
       const arrayBufferView = new Uint8Array(this.response);
       const blob = new Blob([arrayBufferView], { type: 'image/png' });
       const urlCreator = window.URL; // || window.webkitURL;
