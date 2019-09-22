@@ -4,8 +4,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import Map from 'ol/Map';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
-import proj from 'ol/proj';
-import extent from 'ol/extent';
+//import proj from 'ol/proj';
+//import extent from 'ol/extent';
 import WMTS from 'ol/source/WMTS';
 import optionsFromCapabilities from 'ol/source/WMTS';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
@@ -82,10 +82,10 @@ export class PublicVarService {
 
   // ---- wmts params ----
   projLike: ol.ProjectionLike = 'EPSG:3857';
-  projection: ol.proj.Projection = proj.get(this.projLike);
-  projectionExtent: ol.Extent = this.projection.getExtent();
-  size: number = extent.getWidth(this.projectionExtent) / 256;
-  resolution: Array<number> = new Array(21).map((res, index) => this.size / Math.pow(2 , index ) );
+  //projection: ol.proj.Projection = proj.get(this.projLike);
+  //projectionExtent: ol.Extent = this.projection.getExtent();
+  //size: number = extent.getWidth(this.projectionExtent) / 256;
+  //resolution: Array<number> = new Array(21).map((res, index) => this.size / Math.pow(2 , index ) );
   matrixIds: Array<string> = new Array(21).map((mat, idx) => 'EPSG:3857:' + idx);
 
   MapLayer = new TileLayer({
