@@ -61,7 +61,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
         )
         .subscribe(data => {
           sessionStorage.setItem('token', data.token);
-          //console.log(data);
+          console.log(data);
         });
 
       // ---- first we get ip from https://api.ipify.org?format=json ----
@@ -100,7 +100,7 @@ export class BaseMapComponent implements OnInit, DoCheck {
     this.setView();
     this.addXYZTile();
     // this.addWMTSLayer();
-    // this.addWMS();
+     //this.addWMS();
     this.moveCursor();
     this.zoomCursor();
     this.BBOX();

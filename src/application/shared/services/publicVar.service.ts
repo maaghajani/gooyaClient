@@ -124,12 +124,13 @@ export class PublicVarService {
       url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
-          // 'Kheizaran:PROVINCE',
+          //'Kheizaran:PROVINCE',
           // 'Kheizaran:IRAN_BOARDER',
           // 'Kheizaran:GREEN_AREA',
           // 'Kheizaran:RIVER_LAKE',
           // 'Kheizaran:OCEANS',
           'Kheizaran:KCE_Layer'
+          //'Kheizaran:NETWORK',
         ],
         Tiled: true,
       },

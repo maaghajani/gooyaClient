@@ -10,7 +10,7 @@ import { PublicVarService } from 'src/application/shared/services/publicVar.serv
   styleUrls: ['./search-result.component.scss'],
 })
 export class SearchResultComponent implements OnInit {
-  resultTotal;
+  resultTotal = [];
   searchResults = [
     {
       id: '4ecff356-8bf7-4eb8-80f7-12924145760a',
@@ -251,23 +251,23 @@ export class SearchResultComponent implements OnInit {
   ngOnInit() {}
 
   openSearchResult(URL) {
-      // this.httpClient
-      //   .get(url)
-      //   .toPromise()
-      //   .then(searchResultResponse => {
-      //     // this.searchResult = searchResultResponse;
-      //     console.log(searchResultResponse)
-      //   });
+    // this.httpClient
+    //   .get(URL)
+    //   .toPromise()
+    //   .then(searchResultResponse => {
+    //     // this.searchResult = searchResultResponse;
+    //     console.log(searchResultResponse)
+    //   });
 
-      (document.getElementById('streetTabRadio') as HTMLInputElement).checked = true;
-      document.getElementById('search-result').style.display = 'block';
-      document.getElementById('utility').style.zIndex = '1';
-      document.getElementById('utility').style.position = 'absolute';
-      document.getElementById('utility').style.boxShadow = 'none';
-      document.getElementById('dirct-icon').style.display = 'none';
-      this.publicVar.isOpenSearchResult = true;
-
-}
+    (document.getElementById('streetTabRadio') as HTMLInputElement).checked = true;
+    document.getElementById('search-result').style.display = 'block';
+    document.getElementById('utility').style.zIndex = '1';
+    document.getElementById('utility').style.position = 'absolute';
+    document.getElementById('utility').style.boxShadow = 'none';
+    document.getElementById('dirct-icon').style.display = 'none';
+    this.publicVar.isOpenSearchResult = true;
+    //this.showResult();
+  }
 
   closeSearch() {
     document.getElementById('search-result').style.display = 'none';
@@ -281,7 +281,6 @@ export class SearchResultComponent implements OnInit {
     const streetTabRadio = document.getElementById('streetTabRadio') as HTMLInputElement;
     const resultStreet: Array<object> = [];
     const resultPoi: Array<object> = [];
-
     this.searchResults.forEach(resultRow => {
       if (resultRow.type === 'STREET') {
         resultStreet.push(resultRow);
@@ -318,6 +317,5 @@ export class SearchResultComponent implements OnInit {
     this.mapservice.map.getView().setZoom(15);
   }
 
-//*ngFor="let item of resultTotal ; let i = index"
+  //*ngFor="let item of resultTotal ; let i = index"
 }
-
