@@ -5,6 +5,7 @@
     (click)="openMore()"
     #sreachTxt
     (keyup.enter)="Search(sreachTxt)"
+
   />
 
   <div class="search-icon">
@@ -27,4 +28,33 @@
     </button>
   </div>
 </div>
+
+
+<div class="search_result" #searchResult id="search-result">
+  <div class="base">
+          <div id="search-closer" class="search-closer" (click)="closeSearch()" appTooltips="بستن" placement="bottom" delay="500">
+            <svg height="512px" viewBox="0 0 512 512" width="512px">
+              <path
+                d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z" />
+            </svg>
+          </div>
+  </div>
+  <div class="tab">
+    <input id="streetTabRadio" type="radio" name="TabRadio" (click)="showResult()">
+    <label for="streetTabRadio" class="streetTab">نتایج جستجو خیابان</label>
+    <input id="pointTabRadio" type="radio" name="TabRadio"  (click)="showResult()"/>
+    <label for="pointTabRadio" class="pointTab">نتایج جستجو نقاط مهم</label>
+  </div>
+  <div class="all-result" id="resultapi" >
+    <div class="result" *ngFor="let item of resultTotal ; let i = index"  (click)="GoToLocation(i)">
+      <li>
+        <p>{{item.name}} , {{item.suburbName}}</p>
+        <p>{{item.distanceKM}}</p>
+      </li>
+    </div>
+  </div>
+</div>
+
+
+
 

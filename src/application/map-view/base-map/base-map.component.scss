@@ -22,7 +22,15 @@ $padding: 12px;
     position: absolute;
     top: 0px;
     padding: 10px 8px;
+    max-width: 370px;
   }
+  app-search-box {
+    position: absolute;
+    top: 23px;
+    right: 40px;
+    min-width: 275px;
+  }
+
   // ---- Search Box ----
 
   // ---- Mouse Postion ----

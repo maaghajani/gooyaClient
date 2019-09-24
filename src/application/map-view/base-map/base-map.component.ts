@@ -52,16 +52,13 @@ export class BaseMapComponent implements OnInit, DoCheck {
     window.addEventListener('DOMContentLoaded', e => {
       //  get token response  //
       this.httpClient
-        .post<GetTokenResponse>(
-          this.publicVar.baseUrl + ':3000/api/Token/Create',
-          {
-            emailAddress: 'gooya@gmail.com',
-            plainPassword: 'gooya',
-          }
-        )
+        .post<GetTokenResponse>(this.publicVar.baseUrl + ':3000/api/Token/Create', {
+          emailAddress: 'gooya@gmail.com',
+          plainPassword: 'gooya',
+        })
         .subscribe(data => {
           sessionStorage.setItem('token', data.token);
-          console.log(data);
+          //console.log(data);
         });
 
       // ---- first we get ip from https://api.ipify.org?format=json ----
@@ -96,14 +93,14 @@ export class BaseMapComponent implements OnInit, DoCheck {
     // ---- get client infomation like ip, os , ... ----
   }
   ngOnInit() {
+    this.BBOX();
     this.setTarget();
     this.setView();
     this.addXYZTile();
     // this.addWMTSLayer();
-     //this.addWMS();
+    // this.addWMS();
     this.moveCursor();
     this.zoomCursor();
-    this.BBOX();
   }
 
   ngDoCheck() {
@@ -113,17 +110,28 @@ export class BaseMapComponent implements OnInit, DoCheck {
     this.rightControlePosition();
   }
 
-  BBOX() {
+  BBOX = () => {
+    let first = true;
+    if (first === true) {
+      const viewFirst = new View({
+        projection: this.mapservice.project,
+        center: [this.mapservice.centerX, this.mapservice.centerY],
+        zoom: this.mapservice.zoom,
+      });
+      this.mapservice.map.setView(viewFirst);
+    }
+
     if (window.location.hash !== '') {
+      first = false;
       // try to restore center, zoom-level from the URL
-      console.log(window.location.hash);
       const hash = window.location.hash.replace('@', '');
-      const parts = hash.split(',');
-      if (parts.length === 4) {
-        this.mapservice.zoom = parseInt(parts[0], 10);
-        this.mapservice.centerX = parseFloat(parts[1]);
-        this.mapservice.centerY = parseFloat(parts[2]);
-      }
+      sessionStorage.setItem('hash', hash);
+      // const parts = hash.split(',');
+      // if (parts.length === 4) {
+      //   this.mapservice.zoom = parseInt(parts[0], 10);
+      //   this.mapservice.centerX = parseFloat(parts[1]);
+      //   this.mapservice.centerY = parseFloat(parts[2]);
+      // }
     }
     let shouldUpdate = true;
     const view = this.mapservice.map.getView();
@@ -133,12 +141,9 @@ export class BaseMapComponent implements OnInit, DoCheck {
         shouldUpdate = true;
         return;
       }
-
       const center = view.getCenter();
       const hash =
         '#' + Math.round(center[0] * 100) / 100 + ',' + Math.round(center[1] * 100) / 100 + ',' + view.getZoom() + 'Z';
-
-      //console.log(hash);
       const states = {
         zoom: view.getZoom(),
         center: view.getCenter(),
@@ -154,7 +159,6 @@ export class BaseMapComponent implements OnInit, DoCheck {
       if (event.state === null) {
         return;
       }
-      console.log('potstate');
       view.setCenter(event.state.center);
       view.setZoom(event.state.zoom);
       shouldUpdate = false;
@@ -163,14 +167,22 @@ export class BaseMapComponent implements OnInit, DoCheck {
 
   // ---- ol function ----
   setView() {
-    const view = new View({
-      projection: this.mapservice.project,
-      center: [this.mapservice.centerX, this.mapservice.centerY],
-      zoom: this.mapservice.zoom,
-      // minZoom: this.mapservice.minZoom,
-      // maxZoom: this.mapservice.maxZoom
-    });
-    this.mapservice.map.setView(view);
+    if (sessionStorage.getItem('hash') !== null) {
+      const hashStatic = sessionStorage.getItem('hash');
+      const arr = hashStatic.split(',');
+      const arrCX = arr[0].replace('#', '');
+      const arrCy = arr[1];
+      const  arrZ = arr[2].replace('Z', '');
+      this.mapservice.map.getView().setCenter([Number(arrCX), Number(arrCy)]);
+      this.mapservice.map.getView().setZoom(Number(arrZ));
+    } else {
+      const view = new View({
+        projection: this.mapservice.project,
+        center: [this.mapservice.centerX, this.mapservice.centerY],
+        zoom: this.mapservice.zoom,
+      });
+      this.mapservice.map.setView(view);
+    }
   }
   setTarget() {
     this.mapservice.map.setTarget('base-map');
@@ -192,9 +204,9 @@ export class BaseMapComponent implements OnInit, DoCheck {
     this.mapservice.map.addLayer(this.publicVar.xyzLayer);
   }
 
-  addWMTSLayer() {
-    // this.mapservice.map.addLayer(this.publicVar.WMTSLayer);
-  }
+  // addWMTSLayer() {
+  //   // this.mapservice.map.addLayer(this.publicVar.WMTSLayer);
+  // }
 
   // ---- change mouse cursor when move on map ----
   moveCursor() {

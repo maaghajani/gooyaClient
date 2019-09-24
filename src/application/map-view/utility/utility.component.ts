@@ -5,12 +5,11 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <div id="utility" class="utility row">
       <app-menu class="col-1"></app-menu>
-      <app-search-box class="col-9"></app-search-box>
+      <div class="search-box-container col-9"></div>
       <hr />
       <app-direction class="col-1"></app-direction>
     </div>
     <app-more-search id="more-search"></app-more-search>
-    <app-search-result></app-search-result>
   `,
   styleUrls: ['./utility.component.scss']
 })
