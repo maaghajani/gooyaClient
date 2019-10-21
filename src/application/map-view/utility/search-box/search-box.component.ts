@@ -9,20 +9,20 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss'],
   animations: [
-    trigger('moreState', [
+    trigger('openClose', [
       state(
-        'inactive',
+        'open',
         style({
           transform: 'translateY(0)', // X (0)
         })
       ),
       state(
-        'active',
+        'close',
         style({
           transform: 'translateY(100%)', // X (100px)
         })
       ),
-      transition('* => active', [animate('0.5s')]),
+      transition('* => close', [animate('0.5s')]),
     ]),
   ],
 })
@@ -267,9 +267,6 @@ export class SearchBoxComponent implements OnInit {
       type: 'STREET',
     },
   ];
-  openMore(): void {
-    this.currentState = this.currentState === 'inactive' ? 'active' : 'inactive';
-  }
   constructor(
     private mapservice: MapService,
     private httpClient: HttpClient, public publicVar: PublicVarService,
@@ -312,7 +309,6 @@ export class SearchBoxComponent implements OnInit {
     this.resultTotal = this.searchResults.filter(arr => arr['type'] === 'STREET');
     (document.getElementById('streetTabRadio') as HTMLInputElement).checked = true;
     this.publicVar.isOpenSearchResult = true;
-    // this.showResult();
   }
 
   closeSearch() {
@@ -355,13 +351,5 @@ export class SearchBoxComponent implements OnInit {
     this.mapservice.map.getView().setCenter(center);
     this.mapservice.map.getView().setZoom(15);
   }
-
-
-
-
-
-
-
-
 
 }

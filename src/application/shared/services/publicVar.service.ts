@@ -72,19 +72,15 @@ export class PublicVarService {
     source: new XYZ({
       attributions: 'GooyaMap © ',
       url: this.baseUrl + ':3000/api/Map/Tile/{z}/{y}/{x}',
-      // url: 'https://localhost:44309/api/Map/Tile/{z}/{y}/{x}'
     }),
     zIndex: 1,
+    name: 'StaticNetwork',
   });
   MapLayer = new TileLayer({
     source: new TileWMS({
       url: this.baseUrl + ':3000/api/Map/wms',
       params: {
-        Layers: [
-          'Kheizaran:InterState',
-          'Kheizaran:MajorStreets',
-          'Kheizaran:MinorStreets',
-          'Kheizaran:Streets'],
+        Layers: ['Kheizaran:InterState', 'Kheizaran:MajorStreets', 'Kheizaran:MinorStreets', 'Kheizaran:Streets'],
         Tiled: true,
       },
       serverType: 'geoserver',
@@ -107,11 +103,12 @@ export class PublicVarService {
   });
   AreaLAyer = new TileLayer({
     source: new TileWMS({
+      // url: this.baseUrl + ':3000/api/Map/wms',
       url: this.baseUrl + ':3000/api/Map/wms',
       params: {
         Layers: [
-          //'Kheizaran:PROVINCE',
-          // 'Kheizaran:IRAN_BOARDER',
+          // 'Kheizaran:PROVINCE',
+           //'Kheizaran:IRAN_BOARDER',
           // 'Kheizaran:GREEN_AREA',
           // 'Kheizaran:RIVER_LAKE',
           // 'Kheizaran:OCEANS',
@@ -161,7 +158,6 @@ export class PublicVarService {
   // });
   // ----bing satelite----
 
-
   // ---- wmts params ----
   // projLike: ol.ProjectionLike = 'EPSG:3857';
   // projection: ol.proj.Projection = proj.get(this.projLike);
@@ -206,5 +202,4 @@ export class PublicVarService {
   //   };
   //   client.send();
   // }
-
 }

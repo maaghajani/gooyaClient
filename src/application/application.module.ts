@@ -57,6 +57,7 @@ import { FavoritHomeComponent } from './map-view/utility/navigation/your-places/
 import { FavoritWorkComponent } from './map-view/utility/navigation/your-places/favorit-work/favorit-work.component';
 // ----for get info user----
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { NoCommaPipe } from './shared/pipe/no-comma.pipe';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
     AboutUsComponent,
     FavoritHomeComponent,
     FavoritWorkComponent,
+    NoCommaPipe,
   ],
   imports: [
     CommonModule,

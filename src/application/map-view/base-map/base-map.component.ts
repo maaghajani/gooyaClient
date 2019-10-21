@@ -96,9 +96,9 @@ export class BaseMapComponent implements OnInit, DoCheck {
     this.BBOX();
     this.setTarget();
     this.setView();
-    this.addXYZTile();
+    // this.addXYZTile();
     // this.addWMTSLayer();
-    // this.addWMS();
+     this.addWMS();
     this.moveCursor();
     this.zoomCursor();
   }
@@ -189,10 +189,11 @@ export class BaseMapComponent implements OnInit, DoCheck {
   }
   // ---- add kce Layer ---
   addWMS() {
+    //this.mapservice.map.addLayer(this.publicVar.OSMLayer);
     this.mapservice.map.addLayer(this.publicVar.AreaLAyer);
     this.mapservice.map.addLayer(this.publicVar.terrianLayer);
     // this.mapservice.map.addLayer(this.publicVar.MapLayer);
-    this.mapservice.map.addLayer(this.publicVar.poiLayer);
+    //this.mapservice.map.addLayer(this.publicVar.poiLayer);
   }
   // ---- add kce Layer ---
   // ---- ol function ----
