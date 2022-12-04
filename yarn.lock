@@ -2166,9 +2166,9 @@ decamelize@^2.0.0:
     xregexp "4.0.0"
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-equal@^1.0.1:
   version "1.0.1"
@@ -4815,6 +4815,13 @@ ngx-device-detector@^1.3.9:
   version "1.3.9"
   resolved "https://registry.yarnpkg.com/ngx-device-detector/-/ngx-device-detector-1.3.9.tgz#94293dc011e44f6992e2cdb6790263a1f7f133c1"
   integrity sha512-Lj4NS93GwL+qdkw4ZIwPbIWMvsuP0zJ87w4oFGZScboINirt9m9WnE1afbD4Vctwm0I+iktPwmKmxJRjWhB6OQ==
+  dependencies:
+    tslib "^1.9.0"
+
+ngx-ui-loader@^7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/ngx-ui-loader/-/ngx-ui-loader-7.2.2.tgz#cabef2d1ebc73ea2b054f545c8df8590d7963e55"
+  integrity sha512-zmwKSypGuzwyOrGpRS/p5FO5avmbCmDWcBJM11JgJyykB50/W+KbuoOm7dFP9kYMccr2JbUAkWosztNMhY3t1Q==
   dependencies:
     tslib "^1.9.0"
 
